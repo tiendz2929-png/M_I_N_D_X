@@ -1,0 +1,84 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+.box1 {
+    width: 100%;
+    height: 60%;
+    background-color: #ffffff;
+}
+
+.box2 {
+    width: 100%;
+    height: 40%;
+    background-color: #353132;
+}
+
+.box3 {
+    position: absolute;
+    top: 60%; /* Nằm ngay đường viền cắt ngang */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Căn giữa hoàn hảo */
+    width: 60%;
+    height: 110px;
+    background-color: #ebd6c0; /* Màu be sữa */
+    border-radius: 55px; /
+    z-index: 10;
+}
+
+.img {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    width: 320px;
+    height: 400px;
+    z-index: 5;
+}
+
+.h1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    background-color: #ebd6c0;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.h1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.h2 {
+    position: absolute;
+    bottom: 70px;
+    left: 10px;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ccc; /* Nền dự phòng */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.h2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

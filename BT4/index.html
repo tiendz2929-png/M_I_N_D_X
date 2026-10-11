@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Digital Skills with Ease | Online Learning Platform</title>
+    <meta name="description" content="Unlock Digital Mastery Effortlessly! Explore and enhance your digital skills with our user-friendly learning platform and certified instructors.">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B8005C',
+                        'primary-dark': '#96004b',
+                        'primary-light': '#fdf2f7',
+                        navy: '#1A1A2E',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    },
+                    animation: {
+                        float: 'float 4s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#afbbc7] via-[#b9c6d4] to-[#c6d2df] text-slate-800 min-h-screen font-sans antialiased selection:bg-primary selection:text-white relative overflow-x-hidden">
+
+    <!-- Ambient Glow Effects -->
+    <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 -right-32 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-indigo-300/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="w-full sticky top-0 z-50 backdrop-blur-md bg-[#afbbc7]/85 border-b border-white/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-white/80 shadow-xs flex items-center justify-center p-2 group-hover:scale-105 group-hover:bg-white transition-all duration-200">
+                        <img src="./top1.png" alt="Logo" class="w-full h-full object-contain">
+                    </div>
+                    <span class="font-extrabold text-xl tracking-tight text-navy">Skill<span class="text-primary">Master</span></span>
+                </a>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-700">
+                    <a href="#about" class="hover:text-primary transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">About us</a>
+                    <a href="#class" class="hover:text-primary transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">Our Class</a>
+                    <a href="#blog" class="hover:text-primary transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">Blog</a>
+                    <a href="#contact" class="hover:text-primary transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary hover:after:w-full after:transition-all">Contact</a>
+                </nav>
+
+                <!-- Desktop Right Actions: Cart & Search -->
+                <div class="hidden sm:flex items-center gap-4">
+                    <!-- Shopping Cart Button -->
+                    <button class="relative p-2.5 rounded-full bg-white/70 hover:bg-white text-slate-700 shadow-xs transition hover:scale-105" title="Shopping Cart" aria-label="Shopping Cart">
+                        <img src="./ShoppingBag.png" alt="Cart" class="w-5 h-5 object-contain">
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-xs">2</span>
+                    </button>
+
+                    <!-- Search Input Box -->
+                    <div class="relative flex items-center">
+                        <span class="absolute left-3.5 text-slate-400 pointer-events-none text-xs">🔍</span>
+                        <input type="text" placeholder="Search..." class="pl-9 pr-4 py-2 bg-white/85 focus:bg-white rounded-full text-sm text-slate-800 placeholder-slate-400 border border-white/60 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary w-36 md:w-48 lg:w-56 transition-all shadow-inner">
+                    </div>
+                </div>
+
+                <!-- Mobile Action & Hamburger Button -->
+                <div class="flex items-center gap-2 md:hidden">
+                    <button class="relative p-2 rounded-full bg-white/70 text-slate-700 shadow-xs" aria-label="Shopping Cart">
+                        <img src="./ShoppingBag.png" alt="Cart" class="w-5 h-5 object-contain">
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-primary text-white text-[10px] font-bold rounded-full flex items-center justify-center">2</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2.5 rounded-xl bg-white/70 hover:bg-white text-slate-700 focus:outline-none transition-colors shadow-xs" aria-label="Toggle menu">
+                        <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-3 pb-6 bg-[#afbbc7]/95 border-b border-white/20 backdrop-blur-lg transition-all">
+            <div class="flex flex-col gap-2 font-semibold text-slate-700 text-base">
+                <a href="#about" class="px-3 py-2.5 rounded-xl hover:bg-white/60 transition-colors">About us</a>
+                <a href="#class" class="px-3 py-2.5 rounded-xl hover:bg-white/60 transition-colors">Our Class</a>
+                <a href="#blog" class="px-3 py-2.5 rounded-xl hover:bg-white/60 transition-colors">Blog</a>
+                <a href="#contact" class="px-3 py-2.5 rounded-xl hover:bg-white/60 transition-colors">Contact</a>
+                <div class="pt-2 sm:hidden">
+                    <div class="relative flex items-center">
+                        <span class="absolute left-3.5 text-slate-400 text-xs">🔍</span>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2.5 bg-white rounded-full text-sm placeholder-slate-400 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-12 lg:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+            
+            <!-- LEFT COLUMN: Content & Info -->
+            <div class="lg:col-span-7 flex flex-col gap-6 sm:gap-7">
+                
+                <!-- Headline & Subtitle -->
+                <div class="space-y-4">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-navy tracking-tight leading-[1.14]">
+                        Master Digital Skills <br class="hidden sm:inline">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-[#d81b7a] to-pink-600">with Ease!</span>
+                    </h1>
+                    <p class="text-slate-700 sm:text-lg text-base leading-relaxed max-w-xl font-medium">
+                        Unlock Digital Mastery Effortlessly! Explore and enhance your skills with our user-friendly platform.
+                    </p>
+                </div>
+
+                <!-- Total Students Stat Callout -->
+                <div class="flex items-center gap-4 bg-white/80 backdrop-blur-md px-5 py-3.5 rounded-2xl border border-white/80 shadow-xs w-fit border-l-4 border-l-primary hover:shadow-md transition-shadow">
+                    <div class="flex flex-col">
+                        <span class="text-xs uppercase tracking-wider font-extrabold text-slate-700">Total students</span>
+                        <img src="./Frame 48095513.png" alt="Students" class="h-9 sm:h-10 mt-1.5 object-contain">
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-wrap items-center gap-4 pt-1">
+                    <a href="#start" class="inline-flex items-center justify-center px-8 py-3.5 sm:py-4 bg-primary hover:bg-primary-dark text-white font-bold rounded-full shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0 gap-2 text-sm sm:text-base">
+                        <span>Start learning</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                    <a href="#learn" class="inline-flex items-center justify-center px-8 py-3.5 sm:py-4 bg-white/70 hover:bg-white text-navy font-bold rounded-full border border-slate-300/80 hover:border-slate-400 transition-all duration-300 shadow-xs hover:shadow text-sm sm:text-base">
+                        Learn more
+                    </a>
+                </div>
+
+                <!-- Trusted By Brands -->
+                <div class="pt-5 border-t border-slate-300/70">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3.5 flex items-center gap-1.5">
+                        <span class="underline underline-offset-4 decoration-primary decoration-2">Trust by</span>
+                        <span class="text-slate-500 font-normal">leading industry brands</span>
+                    </p>
+                    <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+                        <!-- Google -->
+                        <div class="h-11 px-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-xs border border-white/80 flex items-center justify-center hover:scale-105 transition-transform">
+                            <img src="./Google Logotype.png" alt="Google" class="h-5 object-contain">
+                        </div>
+                        <!-- Canva -->
+                        <div class="h-11 px-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-xs border border-white/80 flex items-center justify-center hover:scale-105 transition-transform">
+                            <img src="./canva.jpg" alt="Canva" class="h-7 rounded object-contain">
+                        </div>
+                        <!-- Amazon -->
+                        <div class="h-11 px-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-xs border border-white/80 flex items-center justify-center hover:scale-105 transition-transform">
+                            <img src="./amazon.jpg" alt="Amazon" class="h-5 rounded object-contain">
+                        </div>
+                        <!-- Sketch -->
+                        <div class="h-11 px-4 bg-white/90 backdrop-blur-sm rounded-xl shadow-xs border border-white/80 flex items-center justify-center hover:scale-105 transition-transform">
+                            <img src="./sketch.png" alt="Sketch" class="h-5 object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Hero Model & Floating Instructor Card -->
+            <div class="lg:col-span-5 relative flex flex-col items-center lg:items-end mt-4 lg:mt-0">
+                <!-- Soft Glow Behind Image -->
+                <div class="absolute -inset-4 bg-gradient-to-tr from-primary/20 via-sky-300/20 to-purple-400/20 rounded-3xl blur-2xl -z-10" aria-hidden="true"></div>
+
+                <div class="relative w-full max-w-[380px] sm:max-w-[420px] lg:max-w-none">
+                    <!-- Main Model Image -->
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/70 bg-gradient-to-b from-white/20 to-transparent">
+                        <img src="./Rectangle 1455.png" alt="Main Model" class="w-full h-auto object-cover transform hover:scale-[1.01] transition-transform duration-500">
+                    </div>
+
+                    <!-- Certified Instructor Floating Card -->
+                    <div class="mt-4 sm:mt-0 sm:absolute sm:top-8 sm:-left-8 lg:-left-10 xl:-left-12 z-20 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl border border-white/90 sm:w-[260px] md:w-[280px] sm:animate-float">
+                        <div class="flex items-center justify-between mb-3 border-b border-slate-100 pb-2">
+                            <h3 class="font-bold text-navy text-xs sm:text-sm tracking-wide">Certified Instructor</h3>
+                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold" title="Verified Instructor">✓</span>
+                        </div>
+
+                        <div class="space-y-2.5">
+                            <!-- Instructor 1 -->
+                            <div class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-slate-50 transition-colors">
+                                <img src="./nguoi1.jpg" alt="Donald Robert" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-primary/25 shadow-xs">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-navy text-xs sm:text-sm leading-tight">Donald Robert</span>
+                                    <span class="text-[11px] sm:text-xs text-slate-500 font-medium">UI/UX Design</span>
+                                </div>
+                            </div>
+
+                            <!-- Instructor 2 -->
+                            <div class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-slate-50 transition-colors">
+                                <img src="./nguoi2.jpg" alt="John White" class="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover ring-2 ring-indigo-500/25 shadow-xs">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-navy text-xs sm:text-sm leading-tight">John White</span>
+                                    <span class="text-[11px] sm:text-xs text-slate-500 font-medium">Web Development</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JavaScript for Mobile Menu Toggle -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                const isHidden = mobileMenu.classList.toggle('hidden');
+                if (menuIcon && closeIcon) {
+                    menuIcon.classList.toggle('hidden', !isHidden);
+                    closeIcon.classList.toggle('hidden', isHidden);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
