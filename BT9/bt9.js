@@ -1,141 +1,90 @@
-//
-let chu = ["Alice", "Bob", "Charlie", "David", "Eve" ];
-let newvalue ="Mind_X";
-let insert =1;
-for(let i = chu.length-1; i>=insert ;i--)
-{
-    chu[i+1]=chu[i];
-}
-chu[insert]= newvalue;
-chu[chu.insert]="Bye";
-console.log(chu);
-
-
-
-
 //Cau 1
-const names = ["Alice", "Bob", "Charlie", "David", "Eve"];
-console.log(names[0]);
-console.log(names[4]);
-
-
+let student = {
+   name : "John",
+   age : 20 
+};
+student.major = "Computer Science" ;
+console.log(student);
 
 
 //Cau 2
-const name1 = ["John", "Jane", "Jim", "Jake"];
-name1[1]="Mary";
-console.log(name1);
+const person = {
+    name : "Alice",
+    age : 25,
+    job : "Designer"
+};
 
-
+delete person.job;
+console.log(person);
 
 
 //Cau 3
-const name2 = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank"];
+const car = {
+    brand: "Toyota", 
+    model: "Camry", 
+    year: 2020
+};
+let count = 0;
 
-for(let i=0;i<=name2.length;i++)
+for (let i in car) 
 {
-    console.log(name2);
-}
-
-
-
-
-//Cau 4
-const name3 = ["Alice", "Bob", "Charlie", "David"];
-let them = "MindX";
-let value = [];
-
-for(let i =name3.length-1; i >=0 ;i--)
-{
-    value[i]= name3[i];
-}
-
-value[value.length]=them;
-console.log(value);
-
-
-
-//Cau 5
-const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-for(let i = 0;i<=numbers.length;i++)
-{
-    if(numbers[i]%2 !==0)
-        console.log(numbers[i]);
-}
-
-
-
-
-//Cau 6
-const name4 = ["Alice", "Bob", "Charlie", "David", "Eve", "Frank"];
-let search = "David"
-
-for(let i =0 ;i <=name4.length;i++)
-{
-    if(name4[i]===search)
-    {
-        console.log(`${search}`);
-        break;
-    }
-}
-
-
-
-//Cau 7
-const number1 = [1, 2, 3, 4, 2, 1, 3, 2, 4, 2];
-const targetCounting = 2;
-let count =0;
-for(i = 0; i<=number1.length;i++)
-{
-    if(number1[i]===targetCounting)
-    {
-        count++;
-    }
+    count++;
 }
 console.log(count);
 
 
+//Cau 4
+const product = { name: "Laptop", price: 1000 };
 
-//Cau 8
-const number2 = [5, 2, 9, 3, 7, 11, 8];
-let max = number2[0];
+const keyValueArray = Object.entries(product);
 
-for (let i = 1; i < numbers.length; i++) {
-    max = (number2[i] > max) ? number2[i] : max;
+console.log(keyValueArray);
+
+
+//Cau 5
+const product1 = [ { name: "Phone", price: 500 }, 
+    { name: "Camera", price: 300 }, 
+    { name: "Tablet", price: 700 } ] ;
+const foundProduct = product1.find(product1 => product1.name === "Camera");
+console.log(foundProduct);
+
+
+//Cau 6
+const products = [ { name: "Phone", price: 500 }, { name: "Camera", price: 300 }, { name: "Tablet", price: 700 } ];
+for(let i = 0; i <= products.length;i++)
+{
+    if(products[i] > 100)
+        console.log(products.name.price);
 }
 
-console.log(max);
 
+//Cau 7
+const person1 = {
+     name: "Bob", age: 25, job: "Developer" 
+};
+person1.age = 30;
+console.log(person1);
+
+//Cau 8
+const obj1 = { a: 1, b: 2 };
+const obj2 = { c: 3, d: 4 };
+
+const gom = { ...obj1, ...obj2 };
+console.log(gom);
 
 
 //Cau 9
-const array = [1, 2, 3, 4, 5];
-array.reverse();
-console.log(array);
+const animal = { type: "Dog", 
+    name: "Buddy", 
+    age: 3 };
+for (let key in animal) {
+    console.log(`"${key}: ${animal[key]}"`);
+}
 
 
 
 //Cau 10
-const duplicatesArray = [1, 2, 2, 3, 4, 4, 5];
-const result = [];
-
-for(let i = 0; i < duplicatesArray.length ; i++)
-{
-    if(!result.includes(duplicatesArray[i]))
-    {
-        result.push(duplicatesArray[i]);
-    }
-}
-console.log(result);
-
-
-
-//Cau 11
-const number3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-let sum = 0; 
-
-for (let i = 0; i < numbers.length; i++) 
-{
-    sum = sum + numbers[i]; 
-}
-console.log(sum);
+const car1 = { brand : "BMW", 
+    model : "X5" };
+const check = "color" in car1;
+console.log(check);
