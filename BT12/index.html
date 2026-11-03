@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head> 
+<body>
+        <form id="todo" class="grid grid-cols-[1fr_auto] gap-2 mb-2.5">
+            <label for="task" class="col-span-full font-bold">Việc cần làm</label>
+            <input id="task" required class="p-2 border border-[#ccd5e2] rounded-lg">
+            <button class="p-2 border border-[#ccd5e2] rounded-lg bg-[#17203a] text-white">Thêm</button>
+        </form>
+
+        <div class="filters flex flex-wrap gap-2 mb-2.5" role="group" aria-label="Lọc công việc">
+            <button data-filter="all" aria-pressed="true"
+                class="p-2 border border-[#ccd5e2] rounded-lg bg-[#17203a] text-white aria-pressed:bg-[#7e22ce]">Tất cả</button>
+            <button data-filter="open" aria-pressed="false"
+                class="p-2 border border-[#ccd5e2] rounded-lg bg-[#17203a] text-white aria-pressed:bg-[#7e22ce]">Chưa xong</button>
+            <button data-filter="done" aria-pressed="false"
+                class="p-2 border border-[#ccd5e2] rounded-lg bg-[#17203a] text-white aria-pressed:bg-[#7e22ce]">Đã xong</button>
+        </div>
+
+        <p id="empty" aria-live="polite"></p>
+             <ul id="tasks" class="list-none p-0 m-0"></ul>
+    <script src="./java.js"></script>
+</body>
+</html>
