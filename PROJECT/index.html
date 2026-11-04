@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MT-STUDY — Sơ Đồ Tư Duy Từ Vựng Linearthinking</title>
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="./base.css" />
+  <link rel="stylesheet" href="./tree.css" />
+  <link rel="stylesheet" href="./flash.css" />
+  <link rel="stylesheet" href="./game.css" />
+</head>
+<body>
+
+  <!-- 1. Header Ứng Dụng -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo">LV</div>
+        <div class="brand-text">
+          <h1><b>MT-STUDY</b></h1>
+          <span>Biến tư duy thành thực tế</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Ô Tìm Kiếm Tức Thời (Debounced Search) -->
+        <div class="search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="search-input"
+            class="search-input"
+            placeholder="Tìm từ vựng, họ từ, cụm từ..."
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Nút Đổi Dark / Light Mode -->
+        <button id="theme-toggle-btn" class="btn-icon" title="Đổi giao diện Sáng/Tối">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Thanh Điều Khiển & Bộ Chuyển Đổi Tab -->
+  <div class="control-bar">
+    <div class="control-container">
+      <!-- Bộ Chọn Chủ Đề -->
+      <div class="topic-selector-wrap">
+        <label for="topic-select">Chủ đề:</label>
+        <select id="topic-select" class="topic-select"></select>
+      </div>
+
+      <!-- Chuyển Đổi Chế Độ Xem (Sơ đồ cây / Mini-game) -->
+      <div class="view-tabs">
+        <button id="tab-tree" class="tab-btn active">
+          <span>🌳</span> Sơ đồ tư duy
+        </button>
+        <button id="tab-game" class="tab-btn">
+          <span>🎮</span> Đấu trường Ghép cụm từ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Thanh Tiến Độ Học Tập (% Hoàn thành) -->
+  <div class="stats-banner">
+    <div class="stats-card">
+      <div class="stats-info">
+        <div id="current-topic-title" class="topic-title">
+          <span>💼</span> <span>Đang nạp...</span>
+        </div>
+        <div class="stats-badges">
+          <span id="stat-count-mastered" class="stat-badge mastered">✓ 0 đã thuộc</span>
+          <span id="stat-count-review" class="stat-badge review">★ 0 cần ôn</span>
+        </div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar-bg">
+          <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
+        <span id="progress-text" class="progress-text">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Vùng Nội Dung Chính -->
+  <main class="main-content">
+    
+    <!-- CHẾ ĐỘ 1: Sơ Đồ Cây Tư Duy (Linearthinking Tree) -->
+    <div id="tree-container" class="tree-view-container">
+      <!-- Tree clusters sẽ được render tự động qua tree.js -->
+    </div>
+
+    <!-- CHẾ ĐỘ 2: Mini-game Ghép Cặp Cụm Từ (Collocation Game) -->
+    <div id="game-container" class="game-view-container">
+      <!-- Dashboard Mini-game -->
+      <div class="game-dashboard">
+        <div class="game-stats">
+          <div class="game-stat-box">
+            <span class="stat-label">Thời gian</span>
+            <span id="game-timer" class="stat-value timer">00:00</span>
+          </div>
+          <div class="game-stat-box">
+            <span class="stat-label">Điểm số</span>
+            <span id="game-score" class="stat-value score">0</span>
+          </div>
+          <div class="game-stat-box">
+            <span id="game-record-info" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">
+              🏆 Kỷ lục: 0
+            </span>
+          </div>
+        </div>
+
+        <div class="game-actions">
+          <button id="btn-game-restart" class="btn-primary">
+            🔄 Bắt đầu lại
+          </button>
+        </div>
+      </div>
+
+      <!-- Sàn Đấu Ghép Thẻ 2 Cột -->
+      <div class="game-board">
+        <div>
+          <div class="game-column-title">Cụm từ tiếng Anh (English)</div>
+          <div id="game-col-left" class="game-column"></div>
+        </div>
+        <div>
+          <div class="game-column-title">Nghĩa tiếng Việt (Context)</div>
+          <div id="game-col-right" class="game-column"></div>
+        </div>
+      </div>
+
+      <!-- Box Chúc Mừng Chiến Thắng -->
+      <div id="game-victory-box" class="victory-box">
+        <div class="victory-icon">🎉</div>
+        <div class="victory-title">Tuyệt Vời! Bạn Đã Làm Chủ Cụm Từ!</div>
+        <div id="game-victory-desc" class="victory-desc"></div>
+        <button id="btn-victory-play-again" class="btn-primary" style="padding: 12px 24px; font-size: 15px;">
+          Chơi lại màn này
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 5. Modal Flashcard 3D Chi Tiết Từ Vựng -->
+  <div id="flashcard-modal" class="modal-backdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <span class="modal-title">Thẻ ghi nhớ Linearthinking</span>
+        <button id="fc-btn-close" class="btn-close-modal" title="Đóng">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Thẻ Lật 3D -->
+        <div id="flip-card-wrapper" class="flip-card-wrapper" title="Bấm vào thẻ để lật xem giải nghĩa">
+          <div class="flip-card-inner">
+            
+            <!-- Mặt Trước -->
+            <div class="card-face front">
+              <span id="fc-front-pos" class="badge-pos verb">Verb</span>
+              <div id="fc-front-word" class="front-word">DECIDE</div>
+              <div id="fc-front-phonetic" class="front-phonetic">/dɪˈsaɪd/</div>
+              <button id="fc-btn-speak" class="btn-speak-large" title="Nghe phát âm bản xứ">
+                🔊
+              </button>
+              <div class="flip-hint">
+                <span>↺</span> Bấm vào thẻ để lật xem nghĩa & ví dụ
+              </div>
+            </div>
+
+            <!-- Mặt Sau -->
+            <div class="card-face back">
+              <div class="back-meaning-title">Giải nghĩa & Ngữ cảnh:</div>
+              <div id="fc-back-meaning" class="back-meaning">Quyết định, đưa ra lựa chọn</div>
+
+              <div class="back-example-wrap">
+                <div class="back-meaning-title" style="margin-bottom: 2px;">Ví dụ thực tế:</div>
+                <div id="fc-back-example-en" class="back-example-en">"You need to decide what to do next."</div>
+                <div id="fc-back-example-vi" class="back-example-vi">→ Bạn cần quyết định xem phải làm gì tiếp theo.</div>
+              </div>
+
+              <div class="flip-hint" style="margin-top: auto;">
+                <span>↺</span> Bấm để quay lại mặt trước
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Các Nút Thao Tác Đánh Dấu -->
+        <div class="modal-actions">
+          <button id="fc-btn-master" class="btn-status-action btn-master">
+            <span>✓</span> Đánh dấu: Đã thuộc
+          </button>
+          <button id="fc-btn-review" class="btn-status-action btn-review">
+            <span>★</span> Đánh dấu: Cần ôn lại
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Footer -->
+  <footer class="app-footer">
+    <p>LinearVocab — Final Project Web Development (HTML5, CSS3, Vanilla JavaScript)</p>
+  </footer>
+
+  <!-- 7. Nạp Các Scripts Logic Theo Đúng Thứ Tự -->
+  <script src="./data.js"></script>
+  <script src="./storage.js"></script>
+  <script src="./speech.js"></script>
+  <script src="./tree.js"></script>
+  <script src="./flashcard.js"></script>
+  <script src="./game.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
