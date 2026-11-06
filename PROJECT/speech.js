@@ -15,12 +15,12 @@ const Speech = {
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-US";
-    utterance.rate = 0.9; // Tốc độ hơi chậm một chút để người mất gốc nghe rõ từng âm
+    utterance.rate = 0.8; // Tốc độ hơi chậm một chút để người mất gốc nghe rõ từng âm
 
     // Cố gắng tìm giọng tiếng Anh bản xứ chuẩn
     const voices = this.synth.getVoices();
     const enVoice = voices.find(
-      (v) => v.lang.startsWith("en-US") || v.lang.startsWith("en-GB") || v.name.includes("English")
+      (v) => v.lang.startsWith("en-US") || v.lang.startsWith("en-GLOBAL") || v.name.includes("English")
     );
     if (enVoice) {
       utterance.voice = enVoice;

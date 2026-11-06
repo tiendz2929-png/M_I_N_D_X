@@ -5,6 +5,7 @@ const Game = {
   selectedLeft: null,
   selectedRight: null,
   score: 0,
+  wrongAttempts: 0,
   timerInterval: null,
   secondsElapsed: 0,
   totalPairs: 0,
@@ -27,6 +28,7 @@ const Game = {
   // Reset điểm và trạng thái
   reset() {
     this.score = 0;
+    this.wrongAttempts = 0;
     this.matchedPairs = 0;
     this.selectedLeft = null;
     this.selectedRight = null;
@@ -36,7 +38,10 @@ const Game = {
 
     this.updateStatsUI();
     const victoryBox = document.getElementById("game-victory-box");
-    if (victoryBox) victoryBox.classList.remove("is-show");
+    if (victoryBox) {
+      victoryBox.classList.remove("is-show");
+      victoryBox.style.display = "none";
+    }
   },
 
   // Bắt đầu đếm thời gian
@@ -88,7 +93,7 @@ const Game = {
     this.totalPairs = pairs.length;
 
     if (pairs.length === 0) {
-      leftCol.innerHTML = "<p>Chủ đề này chưa có cụm từ mẫu.</p>";
+      leftCol.innerHTML = "<p class='text-sm text-slate-400 py-4'>Chủ đề này chưa có cụm từ mẫu.</p>";
       rightCol.innerHTML = "";
       return;
     }
@@ -104,7 +109,7 @@ const Game = {
       card.className = "game-card";
       card.setAttribute("data-pair-id", item.id);
       card.setAttribute("data-side", "left");
-      card.innerHTML = `<span>${item.phrase}</span> <span style="font-size:12px; opacity:0.6;">🇬🇧</span>`;
+      card.innerHTML = `<span>${item.phrase}</span> <span style="font-size:13px; opacity:0.7;">🇬🇧</span>`;
       card.addEventListener("click", () => this.handleCardClick(card));
       leftCol.appendChild(card);
     });
@@ -116,7 +121,7 @@ const Game = {
       card.className = "game-card";
       card.setAttribute("data-pair-id", item.id);
       card.setAttribute("data-side", "right");
-      card.innerHTML = `<span>${item.meaning}</span> <span style="font-size:12px; opacity:0.6;">🇻🇳</span>`;
+      card.innerHTML = `<span>${item.meaning}</span> <span style="font-size:13px; opacity:0.7;">🇻🇳</span>`;
       card.addEventListener("click", () => this.handleCardClick(card));
       rightCol.appendChild(card);
     });
@@ -128,7 +133,7 @@ const Game = {
       if (record) {
         recordEl.textContent = `🏆 Kỷ lục: ${record.score} điểm (${record.timeSeconds}s)`;
       } else {
-        recordEl.textContent = "🏆 Chưa có kỷ lục nào";
+        recordEl.textContent = "🏆 Kỷ lục: Chưa có";
       }
     }
   },
@@ -179,13 +184,15 @@ const Game = {
         this.selectedRight = null;
         this.isLocked = false;
 
-        // Kiểm tra xem đã thắng toàn bộ chưa
+        // Kiểm tra xem đã ghép hết chưa
         if (this.matchedPairs === this.totalPairs) {
           this.handleVictory();
         }
-      }, 250);
+      }, 200);
     } else {
-      // Ghép SAI: Rung lắc và trừ 2 điểm
+      // Ghép SAI: Rung lắc và tăng số lần sai
+      this.wrongAttempts += 1;
+
       setTimeout(() => {
         this.selectedLeft.classList.add("wrong");
         this.selectedRight.classList.add("wrong");
@@ -204,7 +211,7 @@ const Game = {
           this.selectedRight = null;
           this.isLocked = false;
         }, 500);
-      }, 200);
+      }, 150);
     }
   },
 
@@ -218,6 +225,10 @@ const Game = {
   handleVictory() {
     clearInterval(this.timerInterval);
 
+    // Tính điểm trên thang điểm 10 (bắt đầu 10 điểm, mỗi lần sai trừ 1 điểm, tối thiểu 0)
+    const score10 = Math.max(0, 10 - this.wrongAttempts);
+    const evaluation = Celebration.getScoreEvaluation(score10);
+
     // Lưu điểm vào LocalStorage
     const isNewRecord = Storage.saveGameRecord(this.currentTopic.id, this.score, this.secondsElapsed);
 
@@ -226,13 +237,36 @@ const Game = {
 
     if (victoryBox) {
       victoryBox.classList.add("is-show");
+      victoryBox.style.display = "flex";
+
+      const victoryIcon = victoryBox.querySelector(".victory-icon");
+      const victoryTitle = victoryBox.querySelector(".victory-title");
+
+      if (victoryIcon) {
+        victoryIcon.innerHTML = `<span class="text-5xl block animate-bounce mb-2">${evaluation.emotion}</span>`;
+      }
+
+      if (victoryTitle) {
+        victoryTitle.innerHTML = `<span class="${evaluation.textColor} uppercase font-black tracking-wide">${evaluation.title}</span>`;
+      }
+
       if (victoryDesc) {
         victoryDesc.innerHTML = `
-          Bạn đã hoàn thành xuất sắc <strong>${this.totalPairs}/${this.totalPairs}</strong> cụm từ!<br>
-          Điểm số: <strong style="color:var(--success); font-size:18px;">${this.score} điểm</strong> trong <strong>${this.secondsElapsed} giây</strong>.
-          ${isNewRecord ? "<br><span style='color:var(--primary); font-weight:700;'>🎉 Chúc mừng bạn đã phá Kỷ Lục Mới!</span>" : ""}
+          <div class="my-3">
+            <div class="text-4xl font-black ${evaluation.textColor} mb-1">${evaluation.score} <span class="text-xl text-slate-400 font-bold">/ 10</span></div>
+            <div class="text-xs text-slate-500 font-semibold mb-3">
+              (Ghép chuẩn ${this.totalPairs}/${this.totalPairs} cụm từ · Sai ${this.wrongAttempts} lần · ${this.secondsElapsed}s)
+            </div>
+            <div class="p-3.5 rounded-xl border ${evaluation.borderColor} ${evaluation.bgLight} text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+              ${evaluation.message}
+            </div>
+          </div>
+          ${isNewRecord ? "<div class='text-blue-500 font-bold text-sm mt-1'>🎉 Bạn đã phá Kỷ Lục Mới cho chủ đề này!</div>" : ""}
         `;
       }
+
+      // Kích hoạt hiệu ứng ăn mừng pháo hoa
+      Celebration.trigger();
     }
   },
 
@@ -256,4 +290,3 @@ const Game = {
     }
   }
 };
-

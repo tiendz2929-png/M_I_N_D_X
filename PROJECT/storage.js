@@ -4,7 +4,10 @@ const Storage = {
   KEYS: {
     PROGRESS: "linear_vocab_progress",
     THEME: "linear_vocab_theme",
-    GAME_SCORE: "linear_vocab_high_scores"
+    GAME_SCORE: "linear_vocab_high_scores",
+    USERS: "mt_study_users",
+    CURRENT_USER: "mt_study_current_user",
+    FEEDBACKS: "mt_study_feedbacks"
   },
 
   // Lấy toàn bộ bản đồ tiến độ: { [wordId]: 'mastered' | 'review' }
@@ -105,6 +108,102 @@ const Storage = {
     } catch (e) {
       return null;
     }
+  },
+
+  // ════════════════════════════════════════════
+  // QUẢN LÝ TÀI KHOẢN HỌC VIÊN (KHÔNG CẦN SERVER)
+  // ════════════════════════════════════════════
+  getUsers() {
+    try {
+      const data = localStorage.getItem(this.KEYS.USERS);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  getCurrentUser() {
+    try {
+      const data = localStorage.getItem(this.KEYS.CURRENT_USER);
+      return data ? JSON.parse(data) : null;
+    } catch (e) {
+      return null;
+    }
+  },
+
+  registerUser(name, email, password) {
+    const users = this.getUsers();
+    const existing = users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
+    if (existing) {
+      return { success: false, message: "Email này đã được đăng ký tài khoản!" };
+    }
+
+    const newUser = {
+      id: "user_" + Date.now(),
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      password: password,
+      registeredAt: new Date().toLocaleDateString("vi-VN")
+    };
+
+    users.push(newUser);
+    localStorage.setItem(this.KEYS.USERS, JSON.stringify(users));
+
+    // Tự động đăng nhập
+    const userSession = { id: newUser.id, name: newUser.name, email: newUser.email };
+    localStorage.setItem(this.KEYS.CURRENT_USER, JSON.stringify(userSession));
+    return { success: true, user: userSession };
+  },
+
+  loginUser(email, password) {
+    const users = this.getUsers();
+    const user = users.find(
+      (u) => u.email.toLowerCase() === email.trim().toLowerCase() && u.password === password
+    );
+
+    if (!user) {
+      return { success: false, message: "Email hoặc mật khẩu không chính xác!" };
+    }
+
+    const userSession = { id: user.id, name: user.name, email: user.email };
+    localStorage.setItem(this.KEYS.CURRENT_USER, JSON.stringify(userSession));
+    return { success: true, user: userSession };
+  },
+
+  logoutUser() {
+    localStorage.removeItem(this.KEYS.CURRENT_USER);
+  },
+
+  // ════════════════════════════════════════════
+  // QUẢN LÝ GÓP Ý / FEEDBACK HỌC VIÊN
+  // ════════════════════════════════════════════
+  getFeedbacks() {
+    try {
+      const data = localStorage.getItem(this.KEYS.FEEDBACKS);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  saveFeedback(rating, category, content) {
+    try {
+      const feedbacks = this.getFeedbacks();
+      const currentUser = this.getCurrentUser();
+      const newFeedback = {
+        id: "fb_" + Date.now(),
+        userName: currentUser ? currentUser.name : "Học viên ẩn danh",
+        userEmail: currentUser ? currentUser.email : "N/A",
+        rating: Number(rating) || 5,
+        category: category || "Chung",
+        content: content.trim(),
+        createdAt: new Date().toLocaleString("vi-VN")
+      };
+      feedbacks.push(newFeedback);
+      localStorage.setItem(this.KEYS.FEEDBACKS, JSON.stringify(feedbacks));
+      return { success: true, feedback: newFeedback };
+    } catch (e) {
+      return { success: false, message: e.message };
+    }
   }
 };
-

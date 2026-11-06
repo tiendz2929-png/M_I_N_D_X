@@ -1,223 +1,1733 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MT-STUDY — Sơ Đồ Tư Duy Từ Vựng Linearthinking</title>
+  <title>MT-STUDY — Học Từ Vựng Tiếng Anh Linearthinking</title>
 
-  <!-- CSS Stylesheets -->
+  <!-- Google Fonts: Inter & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'selector',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['"Playfair Display"', 'Georgia', 'serif']
+          },
+          colors: {
+            primary: { DEFAULT: '#006D77', light: '#E8F4F5', dark: '#004F57' },
+            teal: { 50: '#E8F4F5', 100: '#c9e8ea', 500: '#006D77', 600: '#004F57', 700: '#00353B' },
+            surface: { 50: '#F7F9FA', 100: '#EEF1F3', 200: '#DDE3E7', 300: '#C5CDD3', 400: '#8E9EAA', 500: '#5F7280', 600: '#3A4F5C', 700: '#243340', 800: '#162330', 900: '#0C1820' },
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS Modules -->
   <link rel="stylesheet" href="./base.css" />
   <link rel="stylesheet" href="./tree.css" />
   <link rel="stylesheet" href="./flash.css" />
   <link rel="stylesheet" href="./game.css" />
-</head>
-<body>
+  <link rel="stylesheet" href="./quiz.css" />
 
-  <!-- 1. Header Ứng Dụng -->
-  <header class="app-header">
-    <div class="header-container">
-      <div class="brand">
-        <div class="brand-logo">LV</div>
-        <div class="brand-text">
-          <h1><b>MT-STUDY</b></h1>
-          <span>Biến tư duy thành thực tế</span>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #EEF1F3;
+      color: #162330;
+    }
+
+    body.dark {
+      background: #0C1820;
+      color: #EEF1F3;
+    }
+
+    /* ---- SIDEBAR ---- */
+    #sidebar {
+      width: 260px;
+      min-width: 260px;
+    }
+
+    /* ---- ACTIVE TAB pill ---- */
+    .nav-tab.active {
+      background: #006D77 !important;
+      color: #fff !important;
+      box-shadow: 0 2px 8px rgba(0, 109, 119, .35);
+    }
+
+    .nav-tab {
+      transition: all .2s ease;
+    }
+
+    .nav-tab:hover:not(.active) {
+      background: rgba(0, 109, 119, .1);
+      color: #006D77;
+    }
+
+    /* ---- TOPIC CARD ---- */
+    .topic-card {
+      transition: all .2s ease;
+    }
+
+    .topic-card.active {
+      border-color: #006D77 !important;
+      background: #E8F4F5;
+    }
+
+    body.dark .topic-card.active {
+      background: rgba(0, 109, 119, .18);
+    }
+
+    .topic-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+    }
+
+    /* ---- PROGRESS BAR ---- */
+    .prog-fill {
+      transition: width .5s ease;
+      background: linear-gradient(90deg, #006D77, #48CAE4);
+    }
+
+    /* ---- GAME & QUIZ containers visibility ---- */
+    #game-container {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #game-container.show {
+      display: flex;
+    }
+
+    #quiz-container {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    #quiz-container.show {
+      display: flex;
+    }
+
+    #tree-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ---- GAME CARDS ---- */
+    .game-card {
+      background: #fff;
+      border: 2px solid #DDE3E7;
+      border-radius: 12px;
+      padding: 14px 18px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #162330;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      min-height: 56px;
+      transition: all .2s ease;
+    }
+
+    body.dark .game-card {
+      background: #162330;
+      border-color: #243340;
+      color: #EEF1F3;
+    }
+
+    .game-card:hover:not([disabled]) {
+      border-color: #006D77;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 109, 119, .2);
+    }
+
+    .game-card.selected {
+      border-color: #006D77;
+      background: #E8F4F5;
+      box-shadow: 0 0 0 3px rgba(0, 109, 119, .2);
+    }
+
+    body.dark .game-card.selected {
+      background: rgba(0, 109, 119, .18);
+    }
+
+    .game-card.matched {
+      border-color: #10b981;
+      background: #d1fae5;
+      color: #065f46;
+      opacity: .6;
+      pointer-events: none;
+    }
+
+    body.dark .game-card.matched {
+      background: rgba(16, 185, 129, .15);
+      color: #6ee7b7;
+    }
+
+    .game-card.wrong {
+      border-color: #ef4444 !important;
+      background: #fee2e2 !important;
+      color: #991b1b !important;
+      animation: shake .4s ease;
+    }
+
+    body.dark .game-card.wrong {
+      background: rgba(239, 68, 68, .15) !important;
+      color: #fca5a5 !important;
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0)
+      }
+
+      25%,
+      75% {
+        transform: translateX(-8px)
+      }
+
+      50% {
+        transform: translateX(8px)
+      }
+    }
+
+    .victory-box {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .victory-box.is-show {
+      display: flex;
+    }
+
+    /* ---- QUIZ OPTION BUTTONS ---- */
+    .quiz-option-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      border: 2px solid #DDE3E7;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #243340;
+      cursor: pointer;
+      text-align: left;
+      transition: all .2s ease;
+    }
+
+    body.dark .quiz-option-btn {
+      background: #162330;
+      border-color: #243340;
+      color: #EEF1F3;
+    }
+
+    .quiz-option-btn:hover:not(:disabled) {
+      border-color: #006D77;
+      color: #006D77;
+      transform: translateX(4px);
+    }
+
+    .quiz-opt-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #EEF1F3;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      color: #5F7280;
+    }
+
+    body.dark .quiz-opt-label {
+      background: #243340;
+      color: #8E9EAA;
+    }
+
+    .quiz-option-btn.quiz-opt-correct {
+      border-color: #10b981 !important;
+      background: #d1fae5 !important;
+      color: #065f46 !important;
+    }
+
+    body.dark .quiz-option-btn.quiz-opt-correct {
+      background: rgba(16, 185, 129, .15) !important;
+      color: #6ee7b7 !important;
+    }
+
+    .quiz-option-btn.quiz-opt-correct .quiz-opt-label {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .quiz-option-btn.quiz-opt-wrong {
+      border-color: #ef4444 !important;
+      background: #fee2e2 !important;
+      color: #991b1b !important;
+      animation: shake .4s ease;
+    }
+
+    body.dark .quiz-option-btn.quiz-opt-wrong {
+      background: rgba(239, 68, 68, .15) !important;
+      color: #fca5a5 !important;
+    }
+
+    .quiz-option-btn.quiz-opt-wrong .quiz-opt-label {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .quiz-timer-bar {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1s linear;
+    }
+
+    .quiz-feedback {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 10px;
+      animation: fadeUp .3s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .quiz-feedback-correct {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .quiz-feedback-wrong {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    body.dark .quiz-feedback-correct {
+      background: rgba(16, 185, 129, .15);
+      color: #6ee7b7;
+      border-color: rgba(16, 185, 129, .3);
+    }
+
+    body.dark .quiz-feedback-wrong {
+      background: rgba(239, 68, 68, .15);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, .3);
+    }
+
+    #quiz-result-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 30px 20px;
+    }
+
+    #quiz-result-screen.show {
+      display: flex;
+    }
+
+    /* ---- BADGE POS ---- */
+    .badge-pos.v,
+    .badge-pos.verb {
+      background: #ede9fe;
+      color: #7c3aed;
+    }
+
+    .badge-pos.n,
+    .badge-pos.noun {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .badge-pos.adj {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .badge-pos.adv {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .badge-pos.phrase {
+      background: #fce7f3;
+      color: #db2777;
+    }
+
+    body.dark .badge-pos.v,
+    .badge-pos.verb {
+      background: rgba(139, 92, 246, .2);
+    }
+
+    body.dark .badge-pos.n,
+    .badge-pos.noun {
+      background: rgba(2, 132, 199, .2);
+    }
+
+    body.dark .badge-pos.adj {
+      background: rgba(217, 119, 6, .2);
+    }
+
+    body.dark .badge-pos.adv {
+      background: rgba(5, 150, 105, .2);
+    }
+
+    /* ---- MODAL BACKDROP ---- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s, visibility .25s;
+    }
+
+    .modal-backdrop.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      background: #fff;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+      overflow: hidden;
+      transform: translateY(20px) scale(.97);
+      transition: transform .3s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    body.dark .modal-container {
+      background: #162330;
+    }
+
+    .modal-backdrop.is-open .modal-container {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid #EEF1F3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    body.dark .modal-header {
+      border-color: #243340;
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0C1820;
+    }
+
+    body.dark .modal-title {
+      color: #EEF1F3;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      color: #8E9EAA;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: .2s;
+    }
+
+    .btn-close-modal:hover {
+      background: #EEF1F3;
+      color: #162330;
+    }
+
+    body.dark .btn-close-modal:hover {
+      background: #243340;
+      color: #EEF1F3;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    /* ---- AUTH TABS ---- */
+    .auth-tab-btn {
+      flex: 1;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 10px;
+      transition: all .2s ease;
+      text-align: center;
+      color: #5F7280;
+    }
+
+    .auth-tab-btn.active {
+      background: #006D77;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 109, 119, .3);
+    }
+
+    /* ---- STAR RATING ---- */
+    .star-rating-item {
+      cursor: pointer;
+      transition: transform .15s ease, color .15s ease;
+      font-size: 28px;
+    }
+
+    .star-rating-item:hover {
+      transform: scale(1.2);
+    }
+
+    /* ---- FLASHCARD 3D ---- */
+    .flip-card-wrapper {
+      perspective: 1000px;
+      height: 300px;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform .6s cubic-bezier(.4, 0, .2, 1);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card-wrapper.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 14px;
+      border: 2px solid #DDE3E7;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #F7F9FA;
+    }
+
+    body.dark .card-face {
+      background: #162330;
+      border-color: #243340;
+    }
+
+    .card-face.back {
+      transform: rotateY(180deg);
+      text-align: left;
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    .front-word {
+      font-size: 30px;
+      font-weight: 900;
+      color: #0C1820;
+      letter-spacing: -.5px;
+      margin: 10px 0 4px;
+    }
+
+    body.dark .front-word {
+      color: #EEF1F3;
+    }
+
+    .front-phonetic {
+      font-size: 15px;
+      color: #5F7280;
+      margin-bottom: 16px;
+    }
+
+    .btn-speak-large {
+      background: #E8F4F5;
+      color: #006D77;
+      border: 1px solid #006D77;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: .2s;
+      margin-bottom: 14px;
+    }
+
+    .btn-speak-large:hover {
+      transform: scale(1.1);
+      background: #006D77;
+      color: #fff;
+    }
+
+    .flip-hint {
+      font-size: 12px;
+      color: #8E9EAA;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-meaning-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #006D77;
+      letter-spacing: .5px;
+      margin-bottom: 4px;
+    }
+
+    .back-meaning {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0C1820;
+      margin-bottom: 14px;
+    }
+
+    body.dark .back-meaning {
+      color: #EEF1F3;
+    }
+
+    .back-example-wrap {
+      background: #F7F9FA;
+      border-left: 3px solid #006D77;
+      padding: 10px 14px;
+      border-radius: 6px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    body.dark .back-example-wrap {
+      background: #0C1820;
+    }
+
+    .back-example-en {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0C1820;
+      margin-bottom: 4px;
+    }
+
+    body.dark .back-example-en {
+      color: #EEF1F3;
+    }
+
+    .back-example-vi {
+      font-size: 12px;
+      color: #5F7280;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-status-action {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1.5px solid;
+      transition: .2s;
+    }
+
+    .btn-master {
+      background: #d1fae5;
+      color: #065f46;
+      border-color: #10b981;
+    }
+
+    .btn-master:hover,
+    .btn-master.is-active {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .btn-review {
+      background: #fef3c7;
+      color: #92400e;
+      border-color: #f59e0b;
+    }
+
+    .btn-review:hover,
+    .btn-review.is-active {
+      background: #f59e0b;
+      color: #fff;
+    }
+
+    /* ---- STATUS PILL ---- */
+    .status-pill {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-pill.mastered {
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+    }
+
+    .status-pill.review {
+      background: #f59e0b;
+      box-shadow: 0 0 6px #f59e0b;
+    }
+
+    .status-pill.unlearned {
+      background: #8E9EAA;
+      opacity: .4;
+    }
+
+    /* ---- TREE ---- */
+    .tree-root-cluster {
+      background: #ffffffa7;
+      border: 1px solid #DDE3E7;
+      border-radius: 16px;
+      padding: 24px;
+      overflow-x: auto;
+      transition: .2s;
+    }
+
+    body.dark .tree-root-cluster {
+      background: #162330;
+      border-color: #243340;
+    }
+
+    .tree-root-cluster:hover {
+      border-color: #006D77;
+      box-shadow: 0 4px 20px rgba(0, 109, 119, .12);
+    }
+
+    .mindmap-flow {
+      display: flex;
+      align-items: flex-start;
+      gap: 32px;
+      min-width: 820px;
+    }
+
+    .node-root-wrap {
+      width: 220px;
+      flex-shrink: 0;
+    }
+
+    .card-node {
+      background: #F7F9FA;
+      border: 2px solid #DDE3E7;
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: .2s;
+      width: 100%;
+      user-select: none;
+    }
+
+    body.dark .card-node {
+      background: #0C1820;
+      border-color: #243340;
+    }
+
+    .card-node:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, .12);
+      border-color: #006D77;
+    }
+
+    .card-node.is-root {
+      background: linear-gradient(135deg, #F7F9FA, #E8F4F5);
+      border-color: #006D77;
+    }
+
+    body.dark .card-node.is-root {
+      background: linear-gradient(135deg, #162330, rgba(0, 109, 119, .2));
+    }
+
+    .node-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .node-word {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0C1820;
+      letter-spacing: -.3px;
+    }
+
+    body.dark .node-word {
+      color: #EEF1F3;
+    }
+
+    .node-phonetic {
+      font-size: 12px;
+      color: #5F7280;
+      margin-bottom: 4px;
+    }
+
+  .node-meaning {
+    font-size: 13px;
+    color: #0c9572;
+    overflow: hidden;
+    display: -webkit-box;
+    display: box;
+    line-clamp: 2;  
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+    body.dark .node-meaning {
+      color: #8E9EAA;
+    }
+
+    .node-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px dashed #DDE3E7;
+    }
+
+    body.dark .node-actions {
+      border-color: #243340;
+    }
+
+    .btn-speak-mini {
+      background: transparent;
+      border: none;
+      color: #8E9EAA;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px;
+      border-radius: 6px;
+      transition: .2s;
+    }
+
+    .btn-speak-mini:hover {
+      color: #006D77;
+      background: #E8F4F5;
+    }
+
+    body.dark .btn-speak-mini:hover {
+      background: rgba(0, 109, 119, .15);
+    }
+
+    .btn-toggle-branch {
+      background: #EEF1F3;
+      border: 1px solid #DDE3E7;
+      color: #3A4F5C;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: .2s;
+    }
+
+    body.dark .btn-toggle-branch {
+      background: #243340;
+      border-color: #3A4F5C;
+      color: #8E9EAA;
+    }
+
+    .btn-toggle-branch:hover {
+      background: #006D77;
+      color: #fff;
+      border-color: #006D77;
+    }
+
+    .branches-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .branches-container::before {
+      content: "";
+      position: absolute;
+      top: 36px;
+      bottom: 36px;
+      left: -20px;
+      width: 2px;
+      background: #DDE3E7;
+    }
+
+    body.dark .branches-container::before {
+      background: #243340;
+    }
+
+    .branch-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    .branch-item::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      width: 20px;
+      height: 2px;
+      background: #DDE3E7;
+    }
+
+    body.dark .branch-item::before {
+      background: #243340;
+    }
+
+    .node-family-wrap {
+      width: 200px;
+      flex-shrink: 0;
+    }
+
+    .collocations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .collocation-card {
+      background: #F7F9FA;
+      border: 1px solid #DDE3E7;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    body.dark .collocation-card {
+      background: #0C1820;
+      border-color: #243340;
+    }
+
+    .collocation-card:hover {
+      border-color: #006D77;
+      background: #E8F4F5;
+      transform: translateX(4px);
+    }
+
+    body.dark .collocation-card:hover {
+      background: rgba(0, 109, 119, .12);
+    }
+
+    .collocation-phrase {
+      font-weight: 700;
+      color: #006D77;
+      font-size: 13px;
+    }
+
+    .collocation-meaning {
+      color: #5F7280;
+      font-size: 12px;
+    }
+
+    .tree-root-cluster.is-collapsed .branches-container {
+      display: none;
+    }
+
+    .badge-pos {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 6px;
+      display: inline-block;
+      letter-spacing: .5px;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #EEF1F3;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #C5CDD3;
+      border-radius: 4px;
+    }
+
+    body.dark ::-webkit-scrollbar-track {
+      background: #162330;
+    }
+
+    body.dark ::-webkit-scrollbar-thumb {
+      background: #3A4F5C;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+
+  <!-- ═══════════════════════════════════════════
+     HEADER — The Forum style (teal brand)
+═══════════════════════════════════════════ -->
+  <header class="sticky top-0 z-50 bg-white dark:bg-slate-800 border-b border-surface-200 shadow-sm"
+    style="border-color:#DDE3E7;">
+    <div class="max-w-screen-xl mx-auto px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-10 h-10 rounded-xl font-black text-white text-lg shadow"
+          style="background:linear-gradient(135deg,#006D77,#48CAE4);">MT</div>
+        <div>
+          <div class="font-black text-base tracking-tight text-slate-900 dark:text-white">MT-STUDY</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">Học từ vựng theo tư duy Linearthinking</div>
         </div>
       </div>
 
-      <div class="header-actions">
-        <!-- Ô Tìm Kiếm Tức Thời (Debounced Search) -->
-        <div class="search-wrapper">
-          <span class="search-icon">🔍</span>
-          <input
-            type="text"
-            id="search-input"
-            class="search-input"
-            placeholder="Tìm từ vựng, họ từ, cụm từ..."
-            autocomplete="off"
-          />
-        </div>
+      <!-- Search -->
+      <div class="relative flex items-center flex-1 max-w-xs">
+        <span class="absolute left-3 text-sm text-slate-400">🔍</span>
+        <input id="search-input" type="text" autocomplete="off" placeholder="Tìm từ vựng, cụm từ..."
+          style="background:#F7F9FA;border:1.5px solid #DDE3E7;"
+          class="w-full pl-9 pr-4 py-2 rounded-full text-sm text-slate-800 dark:text-slate-100 dark:bg-slate-700 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all duration-300 placeholder:text-gray-400" />
+      </div>
 
-        <!-- Nút Đổi Dark / Light Mode -->
-        <button id="theme-toggle-btn" class="btn-icon" title="Đổi giao diện Sáng/Tối">
+      <!-- Actions: User Greeting / Auth + Feedback + Theme Toggle -->
+      <div class="flex items-center gap-3">
+        <!-- Vùng chào mừng học viên & Nút đăng nhập/đăng ký -->
+        <div id="header-user-wrap" class="flex items-center gap-2"></div>
+
+        <!-- Nút Đổi Dark/Light Mode -->
+        <button id="theme-toggle-btn"
+          class="w-9 h-9 rounded-xl flex items-center justify-center text-base transition-colors bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600"
+          title="Đổi giao diện">
           <span id="theme-icon">🌙</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- 2. Thanh Điều Khiển & Bộ Chuyển Đổi Tab -->
-  <div class="control-bar">
-    <div class="control-container">
-      <!-- Bộ Chọn Chủ Đề -->
-      <div class="topic-selector-wrap">
-        <label for="topic-select">Chủ đề:</label>
-        <select id="topic-select" class="topic-select"></select>
-      </div>
+  <!-- ═══════════════════════════════════════════
+     LAYOUT: Sidebar + Main Content
+═══════════════════════════════════════════ -->
+  <div class="flex flex-1 max-w-screen-xl mx-auto w-full px-4 gap-6 py-5">
 
-      <!-- Chuyển Đổi Chế Độ Xem (Sơ đồ cây / Mini-game) -->
-      <div class="view-tabs">
-        <button id="tab-tree" class="tab-btn active">
-          <span>🌳</span> Sơ đồ tư duy
-        </button>
-        <button id="tab-game" class="tab-btn">
-          <span>🎮</span> Đấu trường Ghép cụm từ
-        </button>
-      </div>
-    </div>
-  </div>
+    <!-- ─── SIDEBAR ─── -->
+    <aside id="sidebar" class="hidden lg:flex flex-col gap-4 flex-shrink-0">
 
-  <!-- 3. Thanh Tiến Độ Học Tập (% Hoàn thành) -->
-  <div class="stats-banner">
-    <div class="stats-card">
-      <div class="stats-info">
-        <div id="current-topic-title" class="topic-title">
-          <span>💼</span> <span>Đang nạp...</span>
+      <!-- Chọn chủ đề -->
+      <div class="rounded-2xl p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-500 dark:text-slate-400">Chủ đề học
         </div>
-        <div class="stats-badges">
-          <span id="stat-count-mastered" class="stat-badge mastered">✓ 0 đã thuộc</span>
-          <span id="stat-count-review" class="stat-badge review">★ 0 cần ôn</span>
+        <div id="topic-list" class="flex flex-col gap-2"></div>
+      </div>
+
+      <!-- Thống kê tiến độ -->
+      <div class="rounded-2xl p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-500 dark:text-slate-400">Tiến độ chủ đề
+        </div>
+        <div class="flex justify-between text-xs mb-1 text-slate-500 dark:text-slate-400">
+          <span id="stat-count-mastered">✓ 0 đã thuộc</span>
+          <span id="stat-count-review">★ 0 cần ôn</span>
+        </div>
+        <div class="rounded-full overflow-hidden h-2.5 bg-slate-200 dark:bg-slate-700">
+          <div id="progress-fill" class="prog-fill h-full rounded-full" style="width:0%"></div>
+        </div>
+        <div class="text-right text-xs font-bold mt-1 text-teal-600 dark:text-teal-400">
+          <span id="progress-text">0%</span>
         </div>
       </div>
 
-      <div class="progress-wrap">
-        <div class="progress-bar-bg">
-          <div id="progress-fill" class="progress-bar-fill"></div>
-        </div>
-        <span id="progress-text" class="progress-text">0%</span>
+      <!-- Hướng dẫn nhanh -->
+      <div class="rounded-2xl p-4 bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800/50">
+        <div class="text-xs font-bold mb-2 text-teal-800 dark:text-teal-300">💡 Cách học hiệu quả</div>
+        <ul class="text-xs space-y-1.5 text-slate-700 dark:text-slate-300">
+          <li>🌳 Khám phá sơ đồ cây từ vựng</li>
+          <li>🔊 Nghe phát âm chuẩn bản xứ</li>
+          <li>🃏 Lật thẻ nhớ định nghĩa & ví dụ</li>
+          <li>🎮 Ghép cụm từ Collocation</li>
+          <li>📝 Làm trắc nghiệm phản xạ</li>
+        </ul>
       </div>
-    </div>
-  </div>
+    </aside>
 
-  <!-- 4. Vùng Nội Dung Chính -->
-  <main class="main-content">
-    
-    <!-- CHẾ ĐỘ 1: Sơ Đồ Cây Tư Duy (Linearthinking Tree) -->
-    <div id="tree-container" class="tree-view-container">
-      <!-- Tree clusters sẽ được render tự động qua tree.js -->
-    </div>
+    <!-- ─── MAIN CONTENT ─── -->
+    <main class="flex-1 flex flex-col gap-5 min-w-0">
 
-    <!-- CHẾ ĐỘ 2: Mini-game Ghép Cặp Cụm Từ (Collocation Game) -->
-    <div id="game-container" class="game-view-container">
-      <!-- Dashboard Mini-game -->
-      <div class="game-dashboard">
-        <div class="game-stats">
-          <div class="game-stat-box">
-            <span class="stat-label">Thời gian</span>
-            <span id="game-timer" class="stat-value timer">00:00</span>
-          </div>
-          <div class="game-stat-box">
-            <span class="stat-label">Điểm số</span>
-            <span id="game-score" class="stat-value score">0</span>
-          </div>
-          <div class="game-stat-box">
-            <span id="game-record-info" style="font-size: 13px; font-weight: 600; color: var(--text-muted);">
-              🏆 Kỷ lục: 0
-            </span>
-          </div>
+      <!-- Topic Title + View Tabs -->
+      <div
+        class="rounded-2xl p-4 flex items-center justify-between flex-wrap gap-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div id="current-topic-title" class="text-lg font-black flex items-center gap-2 text-slate-900 dark:text-white">
+          <span>💼</span><span>Đang nạp...</span>
         </div>
 
-        <div class="game-actions">
-          <button id="btn-game-restart" class="btn-primary">
-            🔄 Bắt đầu lại
+        <!-- Mobile topic select -->
+        <select id="topic-select"
+          class="lg:hidden text-sm font-semibold px-3 py-2 rounded-lg focus:outline-none cursor-pointer bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-800 dark:text-slate-100"></select>
+
+        <!-- Nav Tabs -->
+        <div
+          class="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
+          <button id="tab-tree" class="nav-tab active flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold">
+            🌳 Sơ đồ
+          </button>
+          <button id="tab-game" class="nav-tab flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold">
+            🎮 Ghép từ
+          </button>
+          <button id="tab-quiz" class="nav-tab flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold">
+            📝 Trắc nghiệm
           </button>
         </div>
       </div>
 
-      <!-- Sàn Đấu Ghép Thẻ 2 Cột -->
-      <div class="game-board">
-        <div>
-          <div class="game-column-title">Cụm từ tiếng Anh (English)</div>
-          <div id="game-col-left" class="game-column"></div>
+      <!-- ══ VIEW 1: SƠ ĐỒ CÂY ══ -->
+      <div id="tree-container"></div>
+
+      <!-- ══ VIEW 2: GHÉP CẶP CỤM TỪ ══ -->
+      <div id="game-container">
+
+        <!-- Dashboard -->
+        <div
+          class="rounded-2xl px-5 py-4 flex items-center justify-between flex-wrap gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center gap-6">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Thời gian
+              </div>
+              <div id="game-timer" class="text-2xl font-black font-mono text-teal-600 dark:text-teal-400">00:00</div>
+            </div>
+            <div>
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Điểm số</div>
+              <div id="game-score" class="text-2xl font-black text-emerald-500">0</div>
+            </div>
+            <div class="text-sm font-semibold text-slate-400">
+              <span id="game-record-info">🏆 Kỷ lục: 0</span>
+            </div>
+          </div>
+          <button id="btn-game-restart"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-sm">
+            🔄 Chơi lại
+          </button>
         </div>
-        <div>
-          <div class="game-column-title">Nghĩa tiếng Việt (Context)</div>
-          <div id="game-col-right" class="game-column"></div>
+
+        <!-- Game Board -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <div
+              class="text-center text-sm font-bold mb-3 py-1.5 px-3 rounded-lg bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800/40">
+              🇬🇧 Cụm từ tiếng Anh
+            </div>
+            <div id="game-col-left" class="flex flex-col gap-3"></div>
+          </div>
+          <div>
+            <div
+              class="text-center text-sm font-bold mb-3 py-1.5 px-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/40">
+              🇻🇳 Nghĩa tiếng Việt
+            </div>
+            <div id="game-col-right" class="flex flex-col gap-3"></div>
+          </div>
+        </div>
+
+        <!-- Victory Box -->
+        <div id="game-victory-box"
+          class="victory-box rounded-2xl p-8 bg-white dark:bg-slate-800 border-2 border-emerald-500 shadow-xl">
+          <div class="victory-icon text-5xl">🎉</div>
+          <div class="victory-title text-2xl font-black text-slate-900 dark:text-white">Xuất sắc!</div>
+          <div id="game-victory-desc" class="text-sm text-slate-600 dark:text-slate-300 max-w-md"></div>
+          <button id="btn-victory-play-again"
+            class="mt-3 px-8 py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-md">
+            Chơi lại màn này
+          </button>
         </div>
       </div>
 
-      <!-- Box Chúc Mừng Chiến Thắng -->
-      <div id="game-victory-box" class="victory-box">
-        <div class="victory-icon">🎉</div>
-        <div class="victory-title">Tuyệt Vời! Bạn Đã Làm Chủ Cụm Từ!</div>
-        <div id="game-victory-desc" class="victory-desc"></div>
-        <button id="btn-victory-play-again" class="btn-primary" style="padding: 12px 24px; font-size: 15px;">
-          Chơi lại màn này
-        </button>
+      <!-- ══ VIEW 3: TRẮC NGHIỆM ══ -->
+      <div id="quiz-container">
+
+        <!-- Header thanh điều khiển -->
+        <div
+          class="rounded-2xl px-5 py-4 flex items-center justify-between flex-wrap gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div class="flex items-center gap-6">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Câu hỏi</div>
+              <div id="quiz-question-num" class="text-xl font-black text-slate-900 dark:text-white">1 / 10</div>
+            </div>
+            <div>
+              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Điểm</div>
+              <div id="quiz-current-score" class="text-xl font-black text-emerald-500">0</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Còn:</span>
+              <span id="quiz-timer-count" class="text-xl font-black text-teal-600 dark:text-teal-400">15</span>
+              <span class="text-xs text-slate-400">giây</span>
+            </div>
+          </div>
+          <button id="btn-quiz-restart"
+            class="px-4 py-2 rounded-xl text-sm font-bold text-white bg-slate-600 hover:bg-slate-700 transition-colors">
+            🔄 Làm lại
+          </button>
+        </div>
+
+        <!-- Quiz Play Screen -->
+        <div id="quiz-play-screen">
+          <!-- Progress quiz -->
+          <div class="mb-1 flex justify-between text-xs text-slate-400">
+            <span>Tiến độ câu hỏi</span>
+          </div>
+          <div class="rounded-full h-2 overflow-hidden mb-2 bg-slate-200 dark:bg-slate-700">
+            <div id="quiz-progress-bar" class="prog-fill h-full rounded-full" style="width:0%;"></div>
+          </div>
+          <!-- Timer bar -->
+          <div class="rounded-full h-1.5 overflow-hidden mb-5 bg-slate-200 dark:bg-slate-700">
+            <div id="quiz-timer-bar" class="quiz-timer-bar bg-teal-600" style="width:100%;"></div>
+          </div>
+
+          <!-- Question card -->
+          <div
+            class="rounded-2xl p-6 mb-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+            <div id="quiz-sentence" class="text-sm italic mb-2 text-slate-400"></div>
+            <div id="quiz-question"
+              class="text-base font-semibold mb-4 leading-relaxed text-slate-800 dark:text-slate-100"></div>
+            <div id="quiz-hint"
+              class="text-xs px-3 py-2 rounded-lg border border-dashed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400">
+            </div>
+          </div>
+
+          <!-- Options -->
+          <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3"></div>
+
+          <!-- Feedback -->
+          <div id="quiz-feedback" class="quiz-feedback" style="display:none;"></div>
+        </div>
+
+        <!-- Quiz Result Screen -->
+        <div id="quiz-result-screen"
+          class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md">
+          <div id="quiz-result-grade" class="text-center">
+            <div class="text-5xl mb-2">🏆</div>
+            <div class="text-2xl font-black text-slate-900 dark:text-white">Kết Quả</div>
+          </div>
+          <div id="quiz-result-score" class="text-center"></div>
+          <div id="quiz-result-desc" class="text-sm text-center max-w-md w-full"></div>
+          <button id="btn-quiz-result-restart"
+            class="px-8 py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-md mt-2">
+            Thử lại ngay
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     SECTION: TÂM HUYẾT & TRIẾT LÝ (CÁCH HỌC TỪ LINEARTHINKING)
+     Thiết kế chuẩn theo phong cách thương hiệu sang trọng
+═══════════════════════════════════════════ -->
+  <section class="max-w-screen-xl mx-auto w-full px-4 my-10">
+    <div
+      class="rounded-[32px] p-8 md:p-14 bg-[#FAF7F2] dark:bg-slate-800/90 border border-[#EFE7DC] dark:border-slate-700/80 shadow-sm transition-colors">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+
+        <!-- Cột Trái: 2 Hình ảnh bo góc tròn mềm mại (Offset Cards) -->
+        <div class="lg:col-span-5 flex items-center gap-4">
+          <div class="w-1/2 pt-8">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=700&auto=format&fit=crop&q=80"
+              alt="Học từ vựng Linearthinking"
+              class="rounded-[28px] shadow-lg object-cover w-full h-[320px] border border-white/60 dark:border-slate-700 hover:scale-[1.02] transition-transform duration-300" />
+          </div>
+          <div class="w-1/2 pb-8">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700&auto=format&fit=crop&q=80"
+              alt="Môi trường học tập chủ động"
+              class="rounded-[28px] shadow-lg object-cover w-full h-[320px] border border-white/60 dark:border-slate-700 hover:scale-[1.02] transition-transform duration-300" />
+          </div>
+        </div>
+
+        <!-- Cột Phải: Nội dung Triết lý & Cách học Linearthinking -->
+        <div class="lg:col-span-7 flex flex-col justify-center">
+          <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#8F4818] dark:text-amber-400 mb-3">
+            Tâm Huyết & Triết Lý
+          </div>
+          <h2
+            class="font-serif text-2xl md:text-4xl font-extrabold text-[#1F1916] dark:text-white leading-[1.25] mb-5 tracking-tight">
+            Từ Nền Tảng Mất Gốc Đến Làm Chủ Từ Vựng Cùng Linearthinking
+          </h2>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-4 font-normal">
+            Chúng tôi tin rằng, một phương pháp học tiếng Anh hiệu quả phải bắt đầu từ sự thấu hiểu bản chất ngôn ngữ và
+            tư duy liên kết logic. Mỗi từ vựng tại <strong>MT-STUDY</strong> không đứng đơn lẻ mà được xâu chuỗi từ
+            <em>Từ gốc (Root)</em>, <em>Họ từ (Word Family)</em> cho đến <em>Cụm từ liên kết (Collocations)</em> để đánh
+            thức phản xạ ngữ cảnh tự nhiên của bạn.
+          </p>
+          <p class="text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-normal">
+            Không sử dụng phương pháp học vẹt dịch nghĩa từng từ, không nhồi nhét lý thuyết khô khan — chúng tôi giữ
+            trọn sự tinh gọn và tính ứng dụng thực tế với kỹ thuật học hiện đại, mang lại trải nghiệm ghi nhớ sâu sắc,
+            phản xạ mượt mà và tự tin bứt phá trong học tập cũng như công việc.
+          </p>
+
+          <!-- 2 Badge cam kết chuẩn ảnh mẫu -->
+          <div class="flex items-center gap-4 flex-wrap">
+            <div
+              class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#F5EBDC] dark:bg-slate-700/70 border border-[#E8DAC6] dark:border-slate-600/70">
+              <span
+                class="w-5 h-5 rounded-full bg-[#E5B55A] text-white flex items-center justify-center text-xs font-black shadow-sm">✓</span>
+              <span class="text-xs font-bold text-[#3B2C24] dark:text-slate-200">100% Tư duy liên kết logic</span>
+            </div>
+            <div
+              class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#F5EBDC] dark:bg-slate-700/70 border border-[#E8DAC6] dark:border-slate-600/70">
+              <span
+                class="w-5 h-5 rounded-full bg-[#E5B55A] text-white flex items-center justify-center text-xs font-black shadow-sm">✓</span>
+              <span class="text-xs font-bold text-[#3B2C24] dark:text-slate-200">Phản xạ câu và cụm từ tức thì</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+  </section>
 
-  </main>
+  <!-- ═══════════════════════════════════════════
+     SECTION: CẢM NHẬN THỰC TẾ (HỌC VIÊN NÓI GÌ)
+     Thiết kế 3 thẻ trắng bo tròn mềm mại + 5 sao vàng chuẩn ảnh mẫu
+═══════════════════════════════════════════ -->
+  <section class="max-w-screen-xl mx-auto w-full px-4 mb-16">
+    <div class="text-center mb-10">
+      <div class="text-xs font-bold uppercase tracking-[0.2em] text-[#8F4818] dark:text-amber-400 mb-2">
+        Cảm Nhận Thực Tế
+      </div>
+      <h2 class="font-serif text-2xl md:text-4xl font-extrabold text-[#1F1916] dark:text-white tracking-tight">
+        Học Viên Nói Gì Về MT-STUDY?
+      </h2>
+    </div>
 
-  <!-- 5. Modal Flashcard 3D Chi Tiết Từ Vựng -->
+    <!-- 3 Feedback Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Card 1: Minh Hoàng -->
+      <div
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-[28px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <!-- 5 sao vàng -->
+          <div class="flex items-center gap-1 text-[#F5A623] text-sm mb-4 select-none">
+            ★★★★★
+          </div>
+          <!-- Đoạn trích dẫn in nghiêng -->
+          <p class="italic text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-8 font-normal">
+            "Học từ vựng ở đây thật sự là đỉnh nhất khu vực. Sơ đồ cây tư duy phân tích từ gốc ra họ từ và cụm liên kết
+            rất chỉn chu, học 1 từ mà liên tưởng ra cả 5 từ. Vừa học vừa ghép thẻ phản xạ cực kỳ nhớ sâu và không hề bị
+            ngợp!"
+          </p>
+        </div>
+        <!-- Thông tin tác giả -->
+        <div class="flex items-center gap-3.5 pt-4 border-t border-slate-100 dark:border-slate-700/60">
+          <div
+            class="w-10 h-10 rounded-full bg-[#7B2E10] text-white flex items-center justify-center font-bold text-xs uppercase flex-shrink-0 shadow-sm">
+            MH
+          </div>
+          <div>
+            <div class="font-bold text-sm text-slate-900 dark:text-white leading-tight">Minh Hoàng</div>
+            <div class="text-xs text-slate-400 mt-0.5">Designer tại Quận 1</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Thanh Loan -->
+      <div
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-[28px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <!-- 5 sao vàng -->
+          <div class="flex items-center gap-1 text-[#F5A623] text-sm mb-4 select-none">
+            ★★★★★
+          </div>
+          <!-- Đoạn trích dẫn in nghiêng -->
+          <p class="italic text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-8 font-normal">
+            "Phương pháp Linearthinking học thanh mát và sảng khoái cực kỳ, ít lý thuyết khô khan và không hề bị rối
+            mắt. Sáng nào cũng phải vào làm 1 bài trắc nghiệm và ôn lại sơ đồ cây 15 phút trước khi bắt đầu làm việc."
+          </p>
+        </div>
+        <!-- Thông tin tác giả -->
+        <div class="flex items-center gap-3.5 pt-4 border-t border-slate-100 dark:border-slate-700/60">
+          <div
+            class="w-10 h-10 rounded-full bg-[#2D2D2D] text-white flex items-center justify-center font-bold text-xs uppercase flex-shrink-0 shadow-sm">
+            TL
+          </div>
+          <div>
+            <div class="font-bold text-sm text-slate-900 dark:text-white leading-tight">Thanh Loan</div>
+            <div class="text-xs text-slate-400 mt-0.5">Giảng viên Anh ngữ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Đăng Khoa -->
+      <div
+        class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-[28px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+        <div>
+          <!-- 5 sao vàng -->
+          <div class="flex items-center gap-1 text-[#F5A623] text-sm mb-4 select-none">
+            ★★★★★
+          </div>
+          <!-- Đoạn trích dẫn in nghiêng -->
+          <p class="italic text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-8 font-normal">
+            "Thẻ Flashcard 3D phát âm kết hợp cùng mini-game ghép cặp tạo hình nghệ thuật. Không gian học hiện đại, các
+            mốc điểm khen thưởng 'Aduuu học bá' và bắn pháo hoa ăn mừng rất vui và truyền cảm hứng học mỗi ngày."
+          </p>
+        </div>
+        <!-- Thông tin tác giả -->
+        <div class="flex items-center gap-3.5 pt-4 border-t border-slate-100 dark:border-slate-700/60">
+          <div
+            class="w-10 h-10 rounded-full bg-[#D96B0B] text-white flex items-center justify-center font-bold text-xs uppercase flex-shrink-0 shadow-sm">
+            ĐK
+          </div>
+          <div>
+            <div class="font-bold text-sm text-slate-900 dark:text-white leading-tight">Đăng Khoa</div>
+            <div class="text-xs text-slate-400 mt-0.5">Food Blogger</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Danh sách các feedback do học viên mới gửi trực tiếp trên web -->
+    <div id="user-submitted-feedbacks" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+     MODAL FLASHCARD 3D
+═══════════════════════════════════════════ -->
   <div id="flashcard-modal" class="modal-backdrop">
     <div class="modal-container">
       <div class="modal-header">
-        <span class="modal-title">Thẻ ghi nhớ Linearthinking</span>
-        <button id="fc-btn-close" class="btn-close-modal" title="Đóng">✕</button>
+        <span class="modal-title">Thẻ ghi nhớ · Linearthinking</span>
+        <button id="fc-btn-close" class="btn-close-modal">✕</button>
       </div>
-
       <div class="modal-body">
-        <!-- Thẻ Lật 3D -->
-        <div id="flip-card-wrapper" class="flip-card-wrapper" title="Bấm vào thẻ để lật xem giải nghĩa">
+        <div id="flip-card-wrapper" class="flip-card-wrapper">
           <div class="flip-card-inner">
-            
-            <!-- Mặt Trước -->
             <div class="card-face front">
-              <span id="fc-front-pos" class="badge-pos verb">Verb</span>
+              <span id="fc-front-pos" class="badge-pos v">v</span>
               <div id="fc-front-word" class="front-word">DECIDE</div>
               <div id="fc-front-phonetic" class="front-phonetic">/dɪˈsaɪd/</div>
-              <button id="fc-btn-speak" class="btn-speak-large" title="Nghe phát âm bản xứ">
-                🔊
-              </button>
-              <div class="flip-hint">
-                <span>↺</span> Bấm vào thẻ để lật xem nghĩa & ví dụ
-              </div>
+              <button id="fc-btn-speak" class="btn-speak-large" title="Nghe phát âm">🔊</button>
+              <div class="flip-hint"><span>↺</span> Bấm thẻ để lật xem nghĩa</div>
             </div>
-
-            <!-- Mặt Sau -->
             <div class="card-face back">
-              <div class="back-meaning-title">Giải nghĩa & Ngữ cảnh:</div>
-              <div id="fc-back-meaning" class="back-meaning">Quyết định, đưa ra lựa chọn</div>
-
+              <div class="back-meaning-title">Giải nghĩa</div>
+              <div id="fc-back-meaning" class="back-meaning">Quyết định</div>
               <div class="back-example-wrap">
-                <div class="back-meaning-title" style="margin-bottom: 2px;">Ví dụ thực tế:</div>
-                <div id="fc-back-example-en" class="back-example-en">"You need to decide what to do next."</div>
-                <div id="fc-back-example-vi" class="back-example-vi">→ Bạn cần quyết định xem phải làm gì tiếp theo.</div>
+                <div class="back-meaning-title" style="margin-bottom:2px;">Ví dụ</div>
+                <div id="fc-back-example-en" class="back-example-en">"Example sentence."</div>
+                <div id="fc-back-example-vi" class="back-example-vi">→ Câu ví dụ tiếng Việt.</div>
               </div>
-
-              <div class="flip-hint" style="margin-top: auto;">
-                <span>↺</span> Bấm để quay lại mặt trước
-              </div>
+              <div class="flip-hint" style="margin-top:auto;"><span>↺</span> Bấm để quay lại</div>
             </div>
-
           </div>
         </div>
-
-        <!-- Các Nút Thao Tác Đánh Dấu -->
         <div class="modal-actions">
-          <button id="fc-btn-master" class="btn-status-action btn-master">
-            <span>✓</span> Đánh dấu: Đã thuộc
-          </button>
-          <button id="fc-btn-review" class="btn-status-action btn-review">
-            <span>★</span> Đánh dấu: Cần ôn lại
-          </button>
+          <button id="fc-btn-master" class="btn-status-action btn-master"><span>✓</span> Đã thuộc</button>
+          <button id="fc-btn-review" class="btn-status-action btn-review"><span>★</span> Cần ôn lại</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 6. Footer -->
-  <footer class="app-footer">
-    <p>LinearVocab — Final Project Web Development (HTML5, CSS3, Vanilla JavaScript)</p>
+  <!-- ═══════════════════════════════════════════
+     MODAL ĐĂNG NHẬP / ĐĂNG KÝ HỌC VIÊN
+═══════════════════════════════════════════ -->
+  <div id="auth-modal" class="modal-backdrop">
+    <div class="modal-container max-w-md">
+      <div class="modal-header">
+        <span class="modal-title font-bold">Cổng Học Viên MT-STUDY</span>
+        <button id="btn-close-auth" class="btn-close-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Tab selector -->
+        <div class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-700/60 rounded-xl mb-5">
+          <button id="auth-tab-login" class="auth-tab-btn active">Đăng nhập</button>
+          <button id="auth-tab-register" class="auth-tab-btn">Đăng ký mới</button>
+        </div>
+
+        <!-- Form Đăng nhập -->
+        <form id="auth-form-login" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Email học viên</label>
+            <input type="email" id="login-email" required placeholder="hocvien@gmail.com"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Mật khẩu</label>
+            <input type="password" id="login-password" required placeholder="••••••••"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
+          </div>
+          <button type="submit"
+            class="w-full py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-sm text-sm">
+            Đăng nhập ngay
+          </button>
+        </form>
+
+        <!-- Form Đăng ký -->
+        <form id="auth-form-register" class="space-y-4" style="display:none;">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Họ và Tên học
+              viên</label>
+            <input type="text" id="reg-name" required placeholder="Nguyễn Văn A"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Email</label>
+            <input type="email" id="reg-email" required placeholder="hocvien@gmail.com"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Mật khẩu</label>
+            <input type="password" id="reg-password" required placeholder="Tối thiểu 4 ký tự"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
+          </div>
+          <button type="submit"
+            class="w-full py-3 rounded-xl font-bold text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-sm text-sm">
+            Tạo tài khoản học tập
+          </button>
+        </form>
+
+        <!-- Error Msg -->
+        <div id="auth-error-msg" class="text-xs font-bold text-red-500 mt-3 text-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     MODAL FORM FEEDBACK HỌC VIÊN
+═══════════════════════════════════════════ -->
+  <div id="feedback-modal" class="modal-backdrop">
+    <div class="modal-container max-w-lg">
+      <div class="modal-header">
+        <span class="modal-title font-bold flex items-center gap-2">
+          <span>💌</span> Góp Ý & Đánh Giá Bài Học
+        </span>
+        <button id="btn-close-feedback" class="btn-close-modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="feedback-form" class="space-y-4">
+          <!-- Star rating -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Đánh giá trải nghiệm học
+              của bạn</label>
+            <div id="star-rating-wrap" class="flex gap-2 text-2xl select-none">
+              <span class="star-rating-item text-amber-400" data-star="1">★</span>
+              <span class="star-rating-item text-amber-400" data-star="2">★</span>
+              <span class="star-rating-item text-amber-400" data-star="3">★</span>
+              <span class="star-rating-item text-amber-400" data-star="4">★</span>
+              <span class="star-rating-item text-amber-400" data-star="5">★</span>
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Chủ đề góp ý</label>
+            <select id="feedback-category"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600">
+              <option value="Từ vựng & Linearthinking">📚 Nội dung Từ vựng & Sơ đồ tư duy</option>
+              <option value="Trò chơi ghép cặp">🎮 Trò chơi Ghép cặp Collocation</option>
+              <option value="Trắc nghiệm Quiz">📝 Bài thi Trắc nghiệm phản xạ</option>
+              <option value="Giao diện UI/UX">🎨 Giao diện & Trải nghiệm người dùng</option>
+              <option value="Ý kiến khác">💡 Đề xuất tính năng mới</option>
+            </select>
+          </div>
+
+          <!-- Content -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Ý kiến đóng góp chi
+              tiết</label>
+            <textarea id="feedback-content" rows="4" required
+              placeholder="Chia sẻ cảm nhận, từ vựng bạn muốn thêm hoặc những điểm bạn muốn cải thiện..."
+              class="w-full p-3 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600 placeholder:text-slate-400"></textarea>
+          </div>
+
+          <div id="feedback-msg"></div>
+
+          <button type="submit"
+            class="w-full py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-sm text-sm">
+            Gửi góp ý cho MT-STUDY
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     FOOTER — The Forum style
+═══════════════════════════════════════════ -->
+  <footer class="mt-auto bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700">
+    <div class="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-4 relative">
+
+      <!-- Trái: Copyright -->
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">© 2025 MT-STUDY</p>
+
+      <!-- Giữa: Credit -->
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">
+        Make With Love by <span class="font-bold text-teal-700 dark:text-teal-400">MT</span>
+      </p>
+
+      <!-- Phải: Social icons + Zalo badge nổi -->
+      <div class="flex items-center gap-5 relative">
+        <!-- Zalo Badge nổi -->
+        <a href="#" title="Zalo"
+          class="absolute flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg transition-colors bg-blue-600 hover:bg-blue-700"
+          style="bottom:calc(100% + 6px);right:0;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.373 0 0 5.373 0 12c0 2.062.522 4.003 1.438 5.7L0 24l6.432-1.41A11.936 11.936 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+          </svg>
+          Zalo
+        </a>
+
+        <!-- Facebook -->
+        <a href="#" title="Facebook" class="text-slate-400 hover:text-blue-600 transition-colors">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="#" title="Instagram" class="text-slate-400 hover:text-pink-500 transition-colors">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+          </svg>
+        </a>
+        <!-- TikTok -->
+        <a href="#" title="TikTok" class="text-slate-400 hover:text-black dark:hover:text-white transition-colors">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.33-6.34V8.68a8.18 8.18 0 004.78 1.52V6.73a4.84 4.84 0 01-1.01-.04z" />
+          </svg>
+        </a>
+        <!-- YouTube -->
+        <a href="#" title="YouTube" class="text-slate-400 hover:text-red-600 transition-colors">
+          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
+          </svg>
+        </a>
+      </div>
+    </div>
   </footer>
 
-  <!-- 7. Nạp Các Scripts Logic Theo Đúng Thứ Tự -->
+  <!-- ═══════════════════════════════════════════
+     SCRIPTS (Nạp đúng dependency)
+═══════════════════════════════════════════ -->
   <script src="./data.js"></script>
   <script src="./storage.js"></script>
   <script src="./speech.js"></script>
+  <script src="./celebration.js"></script>
+  <script src="./quiz.js"></script>
+  <script src="./game.js"></script>
   <script src="./tree.js"></script>
   <script src="./flashcard.js"></script>
-  <script src="./game.js"></script>
+  <script src="./auth.js"></script>
   <script src="./app.js"></script>
+
+  <script>
+    // ── Dark mode toggle ──
+    const themeBtn = document.getElementById('theme-toggle-btn');
+    const themeIcon = document.getElementById('theme-icon');
+    const savedTheme = localStorage.getItem('linear_vocab_theme') || 'light';
+
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+      document.documentElement.classList.add('dark');
+      if (themeIcon) themeIcon.textContent = '☀️';
+    }
+
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('dark');
+        document.documentElement.classList.toggle('dark', isDark);
+        if (themeIcon) themeIcon.textContent = isDark ? '☀️' : '🌙';
+        localStorage.setItem('linear_vocab_theme', isDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      });
+    }
+
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+
 </body>
+
 </html>
