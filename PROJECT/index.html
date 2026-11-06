@@ -526,6 +526,26 @@
       box-shadow: 0 2px 8px rgba(0, 109, 119, .3);
     }
 
+    /* ---- ADMIN TABS ---- */
+    .admin-tab-btn {
+      color: #64748b;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+
+    .admin-tab-btn:hover {
+      color: #7c3aed;
+      background: rgba(124, 58, 237, 0.08);
+    }
+
+    .admin-tab-btn.active {
+      background: #7c3aed !important;
+      color: #ffffff !important;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, .35);
+    }
+
     /* ---- STAR RATING ---- */
     .star-rating-item {
       cursor: pointer;
@@ -1535,6 +1555,7 @@
             <input type="password" id="login-password" required placeholder="••••••••"
               class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
           </div>
+
           <button type="submit"
             class="w-full py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-sm text-sm">
             Đăng nhập ngay
@@ -1626,6 +1647,114 @@
             Gửi góp ý cho MT-STUDY
           </button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+     MODAL BẢNG QUẢN TRỊ VIÊN (ADMIN DASHBOARD)
+═══════════════════════════════════════════ -->
+  <div id="admin-modal" class="modal-backdrop">
+    <div class="modal-container max-w-4xl max-h-[90vh] flex flex-col p-0 overflow-hidden">
+      <!-- Header -->
+      <div class="modal-header bg-slate-900 text-white flex items-center justify-between px-6 py-4 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-lg">
+            👑
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              Bảng Quản Trị Viên — MT-STUDY
+              <span class="text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-600 text-white">Admin Hub</span>
+            </h3>
+            <p class="text-xs text-slate-400">Tra cứu & cấp lại mật khẩu học viên, quản lý người dùng và góp ý</p>
+          </div>
+        </div>
+        <button id="btn-close-admin" class="btn-close-modal text-slate-400 hover:text-white hover:bg-slate-800">✕</button>
+      </div>
+
+      <!-- Quick Stats & Tabs Bar -->
+      <div class="px-6 py-3 bg-slate-100 dark:bg-slate-900/70 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-3">
+        <!-- Tabs -->
+        <div class="flex gap-2 p-1 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <button id="admin-tab-users" class="admin-tab-btn active flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all">
+            👥 Danh sách Học viên & Mật khẩu
+          </button>
+          <button id="admin-tab-feedbacks" class="admin-tab-btn flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all">
+            💬 Quản lý Góp ý (0)
+          </button>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="flex items-center gap-3 text-xs">
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-medium">
+            <span>👥 Tổng học viên:</span>
+            <strong id="admin-stat-users" class="font-bold">1</strong>
+          </div>
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-medium">
+            <span>💬 Tổng góp ý:</span>
+            <strong id="admin-stat-feedbacks" class="font-bold">0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="modal-body p-6 overflow-y-auto flex-1">
+        <!-- ── TAB 1: USERS LIST & PASSWORDS ── -->
+        <div id="admin-users-view">
+          <!-- Search & Filter bar -->
+          <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+            <div class="relative flex-1 min-w-[240px]">
+              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+              <input type="text" id="admin-search-users" placeholder="Tìm theo tên học viên hoặc email..."
+                class="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-600 dark:text-white" />
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="admin-user-count-badge" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                Hiển thị: 1 học viên
+              </span>
+            </div>
+          </div>
+
+          <!-- Guide / Note -->
+          <div class="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/50 mb-4 flex items-start gap-2.5 text-xs text-purple-900 dark:text-purple-200">
+            <span class="text-base mt-0.5">💡</span>
+            <div>
+              <strong>Cách quản lý mật khẩu học viên:</strong> Bấm biểu tượng <strong>👁️</strong> để xem mật khẩu thật của học viên đó, bấm <strong>📋</strong> để copy mật khẩu gửi cho họ, hoặc bấm <strong>✏️ Đổi MK</strong> để trực tiếp gán một mật khẩu mới nếu họ quên.
+            </div>
+          </div>
+
+          <!-- Users Table -->
+          <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm bg-white dark:bg-slate-900">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold border-b border-slate-200 dark:border-slate-700 text-[11px]">
+                    <th class="p-3 w-10">#</th>
+                    <th class="p-3">Học viên</th>
+                    <th class="p-3">Email</th>
+                    <th class="p-3">Mật khẩu (Click xem / Copy)</th>
+                    <th class="p-3">Ngày tạo</th>
+                    <th class="p-3 text-center">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                  <!-- Rendered dynamically by Auth.renderAdminUsers() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TAB 2: FEEDBACKS LIST ── -->
+        <div id="admin-feedbacks-view" style="display: none;">
+          <div class="mb-4 flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Danh sách ý kiến đóng góp từ học viên</h4>
+          </div>
+          <div id="admin-feedbacks-list" class="space-y-3">
+            <!-- Rendered dynamically by Auth.renderAdminFeedbacks() -->
+          </div>
+        </div>
       </div>
     </div>
   </div>

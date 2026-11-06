@@ -111,15 +111,35 @@ const Storage = {
   },
 
   // ════════════════════════════════════════════
-  // QUẢN LÝ TÀI KHOẢN HỌC VIÊN (KHÔNG CẦN SERVER)
+  // QUẢN LÝ TÀI KHOẢN HỌC VIÊN & ADMIN
   // ════════════════════════════════════════════
   getUsers() {
     try {
       const data = localStorage.getItem(this.KEYS.USERS);
-      return data ? JSON.parse(data) : [];
+      let users = data ? JSON.parse(data) : [];
+
+      // Luôn đảm bảo có sẵn tài khoản Quản trị viên (Admin) mẫu để quản lý
+      const hasAdmin = users.some((u) => u.email === "admin@gmail.com" || u.role === "admin");
+      if (!hasAdmin) {
+        users.unshift({
+          id: "admin_root",
+          name: "Quản trị viên MT",
+          email: "admin@gmail.com",
+          password: "admin123",
+          role: "admin",
+          registeredAt: "Hệ thống"
+        });
+        localStorage.setItem(this.KEYS.USERS, JSON.stringify(users));
+      }
+      return users;
     } catch (e) {
       return [];
     }
+  },
+
+  isAdmin(user) {
+    if (!user) return false;
+    return user.role === "admin" || user.email === "admin@gmail.com";
   },
 
   getCurrentUser() {
@@ -138,11 +158,13 @@ const Storage = {
       return { success: false, message: "Email này đã được đăng ký tài khoản!" };
     }
 
+    const isFirstAdmin = email.trim().toLowerCase() === "admin@gmail.com";
     const newUser = {
       id: "user_" + Date.now(),
       name: name.trim(),
       email: email.trim().toLowerCase(),
       password: password,
+      role: isFirstAdmin ? "admin" : "student",
       registeredAt: new Date().toLocaleDateString("vi-VN")
     };
 
@@ -150,7 +172,12 @@ const Storage = {
     localStorage.setItem(this.KEYS.USERS, JSON.stringify(users));
 
     // Tự động đăng nhập
-    const userSession = { id: newUser.id, name: newUser.name, email: newUser.email };
+    const userSession = {
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role
+    };
     localStorage.setItem(this.KEYS.CURRENT_USER, JSON.stringify(userSession));
     return { success: true, user: userSession };
   },
@@ -165,13 +192,41 @@ const Storage = {
       return { success: false, message: "Email hoặc mật khẩu không chính xác!" };
     }
 
-    const userSession = { id: user.id, name: user.name, email: user.email };
+    const userSession = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role || (user.email === "admin@gmail.com" ? "admin" : "student")
+    };
     localStorage.setItem(this.KEYS.CURRENT_USER, JSON.stringify(userSession));
     return { success: true, user: userSession };
   },
 
   logoutUser() {
     localStorage.removeItem(this.KEYS.CURRENT_USER);
+  },
+
+  // Đổi mật khẩu học viên (Admin thực hiện)
+  updateUserPassword(userId, newPassword) {
+    const users = this.getUsers();
+    const target = users.find((u) => u.id === userId);
+    if (!target) return { success: false, message: "Không tìm thấy học viên!" };
+    target.password = newPassword.trim();
+    localStorage.setItem(this.KEYS.USERS, JSON.stringify(users));
+    return { success: true, message: `Đã cập nhật mật khẩu cho ${target.name} thành công!` };
+  },
+
+  // Xóa học viên (Admin thực hiện)
+  deleteUser(userId) {
+    let users = this.getUsers();
+    const target = users.find((u) => u.id === userId);
+    if (!target) return { success: false, message: "Không tìm thấy học viên!" };
+    if (this.isAdmin(target)) {
+      return { success: false, message: "Không thể xóa tài khoản Quản trị viên tối cao!" };
+    }
+    users = users.filter((u) => u.id !== userId);
+    localStorage.setItem(this.KEYS.USERS, JSON.stringify(users));
+    return { success: true, message: `Đã xóa học viên ${target.name}!` };
   },
 
   // ════════════════════════════════════════════
@@ -205,5 +260,12 @@ const Storage = {
     } catch (e) {
       return { success: false, message: e.message };
     }
+  },
+
+  deleteFeedback(feedbackId) {
+    let feedbacks = this.getFeedbacks();
+    feedbacks = feedbacks.filter((f) => f.id !== feedbackId);
+    localStorage.setItem(this.KEYS.FEEDBACKS, JSON.stringify(feedbacks));
+    return { success: true };
   }
 };
