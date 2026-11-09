@@ -15,11 +15,11 @@
   color: #e2e8f0;
   cursor: pointer;
   text-align: left;
-  transition: all 0.2s ease;
+  transition: all 0.5s ease;
 }
 
 .quiz-option-btn:hover:not(:disabled) {
-  background: rgba(99, 102, 241, 0.2);
+  background: rgba(141, 49, 145, 0.2);
   border-color: rgba(99, 102, 241, 0.6);
   color: #fff;
   transform: translateX(4px);
@@ -52,9 +52,17 @@
 }
 
 @keyframes correct-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.03); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Trạng thái Sai */
@@ -71,9 +79,20 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25%, 75% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25%,
+  75% {
+    transform: translateX(-6px);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
 }
 
 /* Thanh đếm giờ quiz */
@@ -109,8 +128,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Màn hình kết quả */
@@ -123,4 +149,3 @@
   padding: 40px 20px;
   animation: fadeIn 0.5s ease;
 }
-

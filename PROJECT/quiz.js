@@ -17,7 +17,36 @@ const Quiz = {
     this.bindEvents();
   },
 
-  // Khởi động quiz theo chủ đề
+  // Hiển thị màn hình chuẩn bị (Intro Screen) — Thời gian CHƯA chạy
+  showIntro(topic) {
+    if (!topic) return;
+    this.currentTopic = topic;
+    clearInterval(this.timerInterval);
+
+    const introScreen = document.getElementById("quiz-intro-screen");
+    const controls = document.getElementById("quiz-controls");
+    const playScreen = document.getElementById("quiz-play-screen");
+    const resultScreen = document.getElementById("quiz-result-screen");
+
+    if (introScreen) introScreen.style.display = "block";
+    if (controls) controls.style.display = "none";
+    if (playScreen) playScreen.style.display = "none";
+    if (resultScreen) {
+      resultScreen.style.display = "none";
+      resultScreen.classList.remove("show");
+    }
+
+    const topicNameEl = document.getElementById("quiz-intro-topic-name");
+    const iconEl = document.getElementById("quiz-intro-icon");
+    if (topicNameEl) {
+      topicNameEl.innerHTML = `Chủ đề thi: <strong class="text-slate-900 dark:text-white">${topic.name}</strong>`;
+    }
+    if (iconEl && topic.iconUrl) {
+      iconEl.src = topic.iconUrl;
+    }
+  },
+
+  // Khởi động quiz theo chủ đề — Chỉ chạy KHI NGƯỜI DÙNG BẤM "BẮT ĐẦU"
   start(topic) {
     if (!topic) return;
     this.currentTopic = topic;
@@ -27,8 +56,13 @@ const Quiz = {
     this.correctCount = 0;
     this.totalQuestions = this.questions.length;
 
+    const introScreen = document.getElementById("quiz-intro-screen");
+    const controls = document.getElementById("quiz-controls");
     const resultScreen = document.getElementById("quiz-result-screen");
     const playScreen = document.getElementById("quiz-play-screen");
+
+    if (introScreen) introScreen.style.display = "none";
+    if (controls) controls.style.display = "flex";
     if (resultScreen) {
       resultScreen.style.display = "none";
       resultScreen.classList.remove("show");
@@ -324,7 +358,9 @@ const Quiz = {
 
     const playScreen = document.getElementById("quiz-play-screen");
     const resultScreen = document.getElementById("quiz-result-screen");
+    const controls = document.getElementById("quiz-controls");
     if (playScreen) playScreen.style.display = "none";
+    if (controls) controls.style.display = "none";
 
     if (resultScreen) {
       resultScreen.classList.add("show");
@@ -372,17 +408,24 @@ const Quiz = {
   },
 
   bindEvents() {
+    const btnStart = document.getElementById("btn-quiz-start");
+    if (btnStart) {
+      btnStart.addEventListener("click", () => {
+        if (this.currentTopic) this.start(this.currentTopic);
+      });
+    }
+
     const btnRestart = document.getElementById("btn-quiz-restart");
     if (btnRestart) {
       btnRestart.addEventListener("click", () => {
-        if (this.currentTopic) this.start(this.currentTopic);
+        if (this.currentTopic) this.showIntro(this.currentTopic);
       });
     }
 
     const btnResultRestart = document.getElementById("btn-quiz-result-restart");
     if (btnResultRestart) {
       btnResultRestart.addEventListener("click", () => {
-        if (this.currentTopic) this.start(this.currentTopic);
+        if (this.currentTopic) this.showIntro(this.currentTopic);
       });
     }
   }

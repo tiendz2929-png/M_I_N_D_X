@@ -37,6 +37,11 @@
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/brain.png" />
+
   <!-- Custom CSS Modules -->
   <link rel="stylesheet" href="./base.css" />
   <link rel="stylesheet" href="./tree.css" />
@@ -857,16 +862,16 @@
       margin-bottom: 4px;
     }
 
-  .node-meaning {
-    font-size: 13px;
-    color: #0c9572;
-    overflow: hidden;
-    display: -webkit-box;
-    display: box;
-    line-clamp: 2;  
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
+    .node-meaning {
+      font-size: 13px;
+      color: #0c9572;
+      overflow: hidden;
+      display: -webkit-box;
+      display: box;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
 
     body.dark .node-meaning {
       color: #8E9EAA;
@@ -1075,18 +1080,20 @@
     style="border-color:#DDE3E7;">
     <div class="max-w-screen-xl mx-auto px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
       <!-- Brand -->
-      <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-10 h-10 rounded-xl font-black text-white text-lg shadow"
-          style="background:linear-gradient(135deg,#006D77,#48CAE4);">MT</div>
+      <a href="index.html" class="flex items-center gap-3 text-decoration-none group">
+        <img src="https://img.icons8.com/color/48/brain.png"
+          class="w-10 h-10 object-contain drop-shadow transition-transform group-hover:scale-105" alt="MT-STUDY Logo" />
         <div>
-          <div class="font-black text-base tracking-tight text-slate-900 dark:text-white">MT-STUDY</div>
+          <div class="font-black text-base tracking-tight text-slate-900 dark:text-white">MT-<span
+              class="text-teal-700 dark:text-teal-400">STUDY</span></div>
           <div class="text-xs text-slate-500 dark:text-slate-400">Học từ vựng theo tư duy Linearthinking</div>
         </div>
-      </div>
+      </a>
 
       <!-- Search -->
       <div class="relative flex items-center flex-1 max-w-xs">
-        <span class="absolute left-3 text-sm text-slate-400">🔍</span>
+        <img src="https://img.icons8.com/color/48/search.png"
+          class="absolute left-3 w-4 h-4 object-contain pointer-events-none" alt="Search" />
         <input id="search-input" type="text" autocomplete="off" placeholder="Tìm từ vựng, cụm từ..."
           style="background:#F7F9FA;border:1.5px solid #DDE3E7;"
           class="w-full pl-9 pr-4 py-2 rounded-full text-sm text-slate-800 dark:text-slate-100 dark:bg-slate-700 dark:border-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-600 transition-all duration-300 placeholder:text-gray-400" />
@@ -1099,7 +1106,7 @@
 
         <!-- Nút Đổi Dark/Light Mode -->
         <button id="theme-toggle-btn"
-          class="w-9 h-9 rounded-xl flex items-center justify-center text-base transition-colors bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600"
+          class="w-9 h-9 rounded-xl flex items-center justify-center transition-colors bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600"
           title="Đổi giao diện">
           <span id="theme-icon">🌙</span>
         </button>
@@ -1127,8 +1134,14 @@
         <div class="text-xs font-bold uppercase tracking-widest mb-3 text-slate-500 dark:text-slate-400">Tiến độ chủ đề
         </div>
         <div class="flex justify-between text-xs mb-1 text-slate-500 dark:text-slate-400">
-          <span id="stat-count-mastered">✓ 0 đã thuộc</span>
-          <span id="stat-count-review">★ 0 cần ôn</span>
+          <span id="stat-count-mastered" class="flex items-center gap-1">
+            <img src="https://img.icons8.com/color/48/checkmark.png" class="w-3.5 h-3.5 object-contain inline-block"
+              alt="Mastered" /> 0 đã thuộc
+          </span>
+          <span id="stat-count-review" class="flex items-center gap-1">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-3.5 h-3.5 object-contain inline-block"
+              alt="Review" /> 0 cần ôn
+          </span>
         </div>
         <div class="rounded-full overflow-hidden h-2.5 bg-slate-200 dark:bg-slate-700">
           <div id="progress-fill" class="prog-fill h-full rounded-full" style="width:0%"></div>
@@ -1140,13 +1153,34 @@
 
       <!-- Hướng dẫn nhanh -->
       <div class="rounded-2xl p-4 bg-teal-50 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800/50">
-        <div class="text-xs font-bold mb-2 text-teal-800 dark:text-teal-300">💡 Cách học hiệu quả</div>
-        <ul class="text-xs space-y-1.5 text-slate-700 dark:text-slate-300">
-          <li>🌳 Khám phá sơ đồ cây từ vựng</li>
-          <li>🔊 Nghe phát âm chuẩn bản xứ</li>
-          <li>🃏 Lật thẻ nhớ định nghĩa & ví dụ</li>
-          <li>🎮 Ghép cụm từ Collocation</li>
-          <li>📝 Làm trắc nghiệm phản xạ</li>
+        <div class="text-xs font-bold mb-2 text-teal-800 dark:text-teal-300 flex items-center gap-1.5">
+          <img src="https://img.icons8.com/color/48/idea.png" class="w-4 h-4 object-contain" alt="Tip" />
+          <span>Cách học hiệu quả</span>
+        </div>
+        <ul class="text-xs space-y-2 text-slate-700 dark:text-slate-300">
+          <li class="flex items-center gap-2">
+            <img src="https://img.icons8.com/color/48/brain.png" class="w-3.5 h-3.5 object-contain" alt="Tree" />
+            <span>Khám phá sơ đồ cây từ vựng</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <img src="https://img.icons8.com/color/48/high-volume.png" class="w-3.5 h-3.5 object-contain" alt="Speak" />
+            <span>Nghe phát âm chuẩn bản xứ</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <img src="https://img.icons8.com/color/48/bookmark-ribbon.png" class="w-3.5 h-3.5 object-contain"
+              alt="Flashcard" />
+            <span>Lật thẻ nhớ định nghĩa & ví dụ</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <img src="https://img.icons8.com/color/48/controller.png" class="w-3.5 h-3.5 object-contain" alt="Game" />
+            <a href="game.html" class="text-teal-700 dark:text-teal-400 font-bold hover:underline">Ghép cụm từ
+              Collocation ↗</a>
+          </li>
+          <li class="flex items-center gap-2">
+            <img src="https://img.icons8.com/color/48/test-passed.png" class="w-3.5 h-3.5 object-contain" alt="Quiz" />
+            <a href="quiz.html" class="text-teal-700 dark:text-teal-400 font-bold hover:underline">Làm trắc nghiệm phản
+              xạ ↗</a>
+          </li>
         </ul>
       </div>
     </aside>
@@ -1154,11 +1188,178 @@
     <!-- ─── MAIN CONTENT ─── -->
     <main class="flex-1 flex flex-col gap-5 min-w-0">
 
+      <!-- ══════════════════════════════════════════════════════════
+           1. HERO BACKGROUND & INTRODUCTION BANNER (LINEARTHINKING)
+           Không nhảy liền vào từ vựng mà chào đón & giới thiệu trước
+      ══════════════════════════════════════════════════════════ -->
+      <section
+        class="rounded-3xl p-6 md:p-8 bg-gradient-to-br from-teal-900 via-teal-800 to-slate-900 text-white shadow-xl relative overflow-hidden border border-teal-700/50">
+        <!-- Background decorative elements -->
+        <div class="absolute -right-16 -top-16 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+        <div
+          class="absolute right-1/4 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none">
+        </div>
+
+        <div class="relative z-10">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-bold tracking-wide mb-3">
+            <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+            DOL ENGLISH SUPER LMS · HỌC THEO LINEARTHINKING
+          </div>
+
+          <h1 class="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight mb-3">
+            Làm Chủ Từ Vựng Cốt Lõi Cùng MT-STUDY
+          </h1>
+
+          <p class="text-sm md:text-base text-teal-100/90 max-w-3xl leading-relaxed mb-6">
+            Tạm biệt cách học vẹt danh sách từ rời rạc. Với phương pháp <strong>Linearthinking (Tư duy tuyến
+              tính)</strong>, bạn sẽ kết nối từ vựng theo bản đồ logic: từ <strong>Gốc từ (Root)</strong> ➔ <strong>Họ
+              từ (Word Family)</strong> ➔ <strong>Cụm từ liên kết (Collocations)</strong> và ứng dụng ngay vào ngữ cảnh
+            thực tế!
+          </p>
+
+          <!-- 3 Feature Pills -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 mb-6 border-t border-teal-700/50">
+            <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <img src="https://img.icons8.com/color/48/brain.png" class="w-8 h-8 object-contain flex-shrink-0"
+                alt="Mindmap" />
+              <div>
+                <div class="text-xs font-bold text-white">Sơ Đồ Tuyến Tính</div>
+                <div class="text-[11px] text-teal-200/80">9 chủ đề Reading & Ngữ pháp</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <img src="https://img.icons8.com/color/48/bookmark-ribbon.png"
+                class="w-8 h-8 object-contain flex-shrink-0" alt="Flashcards" />
+              <div>
+                <div class="text-xs font-bold text-white">Thẻ Nhớ Flashcard 3D</div>
+                <div class="text-[11px] text-teal-200/80">Phát âm US/UK & dịch nghĩa chuẩn</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <img src="https://img.icons8.com/color/48/controller.png" class="w-8 h-8 object-contain flex-shrink-0"
+                alt="Gamification" />
+              <div>
+                <div class="text-xs font-bold text-white">Mini Game & Quiz Phản Xạ</div>
+                <div class="text-[11px] text-teal-200/80">Chấm điểm thang 10 & emotion vui</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fast action buttons -->
+          <div class="flex items-center flex-wrap gap-3">
+            <a href="#lms-catalog-section"
+              class="px-5 py-2.5 rounded-xl bg-teal-500 hover:bg-teal-400 text-slate-900 font-extrabold text-xs md:text-sm shadow-md transition-all hover:-translate-y-0.5 flex items-center gap-2">
+              <img src="https://img.icons8.com/color/48/books.png" class="w-4 h-4 object-contain" alt="Books" />
+              <span>Xem Danh Sách Bài Học LMS</span>
+            </a>
+            <a href="#workspace-anchor"
+              class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs md:text-sm border border-white/20 transition-all flex items-center gap-2">
+              <img src="https://img.icons8.com/color/48/checkmark.png" class="w-4 h-4 object-contain" alt="Learn" />
+              <span>Vào Khám Phá Sơ Đồ Cây</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════
+           2. DOL ENGLISH SUPER LMS LESSON CATALOG (CHUẨN HÌNH 1 MẪU)
+           Danh sách bài học thẻ trắng bo tròn, search, filter, badge tiến độ
+      ══════════════════════════════════════════════════════════ -->
+      <section id="lms-catalog-section"
+        class="rounded-3xl p-5 md:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+
+        <!-- LMS Top Header Bar -->
+        <div
+          class="flex items-center justify-between flex-wrap gap-3 pb-4 border-b border-slate-200 dark:border-slate-700 mb-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 flex items-center justify-center">
+              <img src="https://img.icons8.com/color/48/opened-folder.png" class="w-6 h-6 object-contain"
+                alt="LMS Folder" />
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">DOL Super LMS
+                  · Vocabulary</span>
+                <span
+                  class="text-xs px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-semibold">Giai
+                  đoạn 2</span>
+              </div>
+              <h2 class="text-base md:text-lg font-black text-slate-900 dark:text-white">
+                Online-IELTS-5.0 & Ngữ Pháp Trọng Tâm
+              </h2>
+            </div>
+          </div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            Tổng cộng: <strong class="text-teal-700 dark:text-teal-400 font-bold">9 bài học</strong> (5 Reading + 4
+            Grammar)
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar (Giống hình 1) -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-5">
+          <!-- Search input -->
+          <div class="relative flex-1">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+              <img src="https://img.icons8.com/color/48/search.png" class="w-4 h-4 object-contain opacity-70"
+                alt="Search" />
+            </div>
+            <input type="text" id="lms-search-input" placeholder="Tìm kiếm bài học, từ vựng theo chủ đề..."
+              class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600 dark:focus:ring-teal-500 text-slate-800 dark:text-slate-100 placeholder:text-slate-400" />
+          </div>
+
+          <!-- Status Filter Dropdown -->
+          <div class="sm:w-44">
+            <select id="lms-filter-status"
+              class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-600 text-slate-700 dark:text-slate-200 cursor-pointer">
+              <option value="all">Trạng thái (Tất cả)</option>
+              <option value="completed">Đã hoàn thành ✓</option>
+              <option value="learning">Đang học ⏱</option>
+            </select>
+          </div>
+
+          <!-- Skill Filter Dropdown -->
+          <div class="sm:w-44">
+            <select id="lms-filter-skill"
+              class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-teal-600 text-slate-700 dark:text-slate-200 cursor-pointer">
+              <option value="all">Kỹ năng (Tất cả)</option>
+              <option value="reading">IELTS Reading</option>
+              <option value="grammar">Grammar Cốt Lõi</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- LMS Lesson Grid (2 cột chuẩn DOL Super LMS hình 1) -->
+        <div id="lms-lesson-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated dynamically by App.initLmsCatalog() -->
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════
+           3. INTERACTIVE LEARNING WORKSPACE
+           Không gian sơ đồ tư duy chi tiết khi học viên vào bài học
+      ══════════════════════════════════════════════════════════ -->
+      <div id="workspace-anchor" class="pt-2"></div>
+
       <!-- Topic Title + View Tabs -->
       <div
         class="rounded-2xl p-4 flex items-center justify-between flex-wrap gap-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-        <div id="current-topic-title" class="text-lg font-black flex items-center gap-2 text-slate-900 dark:text-white">
-          <span>💼</span><span>Đang nạp...</span>
+        <div class="flex items-center gap-3 flex-wrap">
+          <div id="current-topic-title"
+            class="text-lg font-black flex items-center gap-2 text-slate-900 dark:text-white">
+            <img src="https://img.icons8.com/color/48/briefcase.png" class="w-6 h-6 object-contain inline-block"
+              alt="Topic" />
+            <span>Đang nạp...</span>
+          </div>
+          <a href="#lms-catalog-section"
+            class="text-xs font-bold text-teal-700 dark:text-teal-400 hover:underline flex items-center gap-1 bg-teal-50 dark:bg-teal-950/40 px-2.5 py-1 rounded-lg border border-teal-200/60 dark:border-teal-800/60">
+            ↑ Đổi bài học LMS
+          </a>
         </div>
 
         <!-- Mobile topic select -->
@@ -1169,151 +1370,80 @@
         <div
           class="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600">
           <button id="tab-tree" class="nav-tab active flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold">
-            🌳 Sơ đồ
+            <img src="https://img.icons8.com/color/48/brain.png" class="w-4 h-4 object-contain inline-block"
+              alt="Tree" />
+            <span>Sơ đồ tư duy</span>
           </button>
-          <button id="tab-game" class="nav-tab flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold">
-            🎮 Ghép từ
-          </button>
-          <button id="tab-quiz" class="nav-tab flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold">
-            📝 Trắc nghiệm
-          </button>
+          <a href="game.html" id="tab-game"
+            class="nav-tab flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-teal-700 dark:hover:text-teal-300 transition-colors">
+            <img src="https://img.icons8.com/color/48/controller.png" class="w-4 h-4 object-contain inline-block"
+              alt="Game" />
+            <span>Trò chơi ghép từ ↗</span>
+          </a>
+          <a href="quiz.html" id="tab-quiz"
+            class="nav-tab flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-teal-700 dark:hover:text-teal-300 transition-colors">
+            <img src="https://img.icons8.com/color/48/test-passed.png" class="w-4 h-4 object-contain inline-block"
+              alt="Quiz" />
+            <span>Trắc nghiệm ↗</span>
+          </a>
         </div>
       </div>
 
       <!-- ══ VIEW 1: SƠ ĐỒ CÂY ══ -->
       <div id="tree-container"></div>
 
-      <!-- ══ VIEW 2: GHÉP CẶP CỤM TỪ ══ -->
-      <div id="game-container">
-
-        <!-- Dashboard -->
-        <div
-          class="rounded-2xl px-5 py-4 flex items-center justify-between flex-wrap gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div class="flex items-center gap-6">
-            <div>
-              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Thời gian
-              </div>
-              <div id="game-timer" class="text-2xl font-black font-mono text-teal-600 dark:text-teal-400">00:00</div>
-            </div>
-            <div>
-              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Điểm số</div>
-              <div id="game-score" class="text-2xl font-black text-emerald-500">0</div>
-            </div>
-            <div class="text-sm font-semibold text-slate-400">
-              <span id="game-record-info">🏆 Kỷ lục: 0</span>
-            </div>
-          </div>
-          <button id="btn-game-restart"
-            class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-sm">
-            🔄 Chơi lại
-          </button>
-        </div>
-
-        <!-- Game Board -->
-        <div class="grid grid-cols-2 gap-4">
-          <div>
+      <!-- ══ CALL TO ACTIONS: GAME & QUIZ SEPARATE PAGES ══ -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+        <!-- Game Card -->
+        <a href="game.html"
+          class="group bg-gradient-to-br from-white to-teal-50/50 dark:from-slate-800 dark:to-teal-950/20 p-6 md:p-7 rounded-3xl border border-teal-200/80 dark:border-teal-800/60 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 block">
+          <div class="flex items-start justify-between gap-4">
             <div
-              class="text-center text-sm font-bold mb-3 py-1.5 px-3 rounded-lg bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800/40">
-              🇬🇧 Cụm từ tiếng Anh
+              class="w-12 h-12 rounded-2xl bg-teal-100 dark:bg-teal-950 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <img src="https://img.icons8.com/color/48/controller.png" class="w-7 h-7 object-contain" alt="Game" />
             </div>
-            <div id="game-col-left" class="flex flex-col gap-3"></div>
+            <span
+              class="text-xs font-bold px-3 py-1 rounded-full bg-teal-600 text-white flex items-center gap-1 shadow-sm">
+              Mở trang riêng ↗
+            </span>
           </div>
-          <div>
-            <div
-              class="text-center text-sm font-bold mb-3 py-1.5 px-3 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/40">
-              🇻🇳 Nghĩa tiếng Việt
-            </div>
-            <div id="game-col-right" class="flex flex-col gap-3"></div>
-          </div>
-        </div>
+          <h3
+            class="text-lg font-black text-slate-900 dark:text-white mt-4 group-hover:text-teal-700 dark:group-hover:text-teal-400 transition-colors flex items-center gap-2">
+            Trò Chơi Ghép Cặp Collocation
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+            Nối cụm từ tiếng Anh với nghĩa tiếng Việt tương ứng. Mỗi lần ghép sai sẽ bị trừ điểm theo thang điểm 10.
+            Chinh phục điểm 10 để nhận danh hiệu "Aduuu học bá"!
+          </p>
+        </a>
 
-        <!-- Victory Box -->
-        <div id="game-victory-box"
-          class="victory-box rounded-2xl p-8 bg-white dark:bg-slate-800 border-2 border-emerald-500 shadow-xl">
-          <div class="victory-icon text-5xl">🎉</div>
-          <div class="victory-title text-2xl font-black text-slate-900 dark:text-white">Xuất sắc!</div>
-          <div id="game-victory-desc" class="text-sm text-slate-600 dark:text-slate-300 max-w-md"></div>
-          <button id="btn-victory-play-again"
-            class="mt-3 px-8 py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-md">
-            Chơi lại màn này
-          </button>
-        </div>
+        <!-- Quiz Card -->
+        <a href="quiz.html"
+          class="group bg-gradient-to-br from-white to-blue-50/50 dark:from-slate-800 dark:to-blue-950/20 p-6 md:p-7 rounded-3xl border border-blue-200/80 dark:border-blue-800/60 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 block">
+          <div class="flex items-start justify-between gap-4">
+            <div
+              class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-950 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <img src="https://img.icons8.com/color/48/test-passed.png" class="w-7 h-7 object-contain" alt="Quiz" />
+            </div>
+            <span
+              class="text-xs font-bold px-3 py-1 rounded-full bg-blue-600 text-white flex items-center gap-1 shadow-sm">
+              Mở trang riêng ↗
+            </span>
+          </div>
+          <h3
+            class="text-lg font-black text-slate-900 dark:text-white mt-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors flex items-center gap-2">
+            Bài Thi Trắc Nghiệm Phản Xạ
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+            10 câu hỏi điền từ vào ngữ cảnh và chọn loại từ theo thời gian đếm ngược 15s. Đánh giá xếp loại thông minh
+            cùng emotion khích lệ!
+          </p>
+        </a>
       </div>
 
-      <!-- ══ VIEW 3: TRẮC NGHIỆM ══ -->
-      <div id="quiz-container">
-
-        <!-- Header thanh điều khiển -->
-        <div
-          class="rounded-2xl px-5 py-4 flex items-center justify-between flex-wrap gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-          <div class="flex items-center gap-6">
-            <div>
-              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Câu hỏi</div>
-              <div id="quiz-question-num" class="text-xl font-black text-slate-900 dark:text-white">1 / 10</div>
-            </div>
-            <div>
-              <div class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Điểm</div>
-              <div id="quiz-current-score" class="text-xl font-black text-emerald-500">0</div>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Còn:</span>
-              <span id="quiz-timer-count" class="text-xl font-black text-teal-600 dark:text-teal-400">15</span>
-              <span class="text-xs text-slate-400">giây</span>
-            </div>
-          </div>
-          <button id="btn-quiz-restart"
-            class="px-4 py-2 rounded-xl text-sm font-bold text-white bg-slate-600 hover:bg-slate-700 transition-colors">
-            🔄 Làm lại
-          </button>
-        </div>
-
-        <!-- Quiz Play Screen -->
-        <div id="quiz-play-screen">
-          <!-- Progress quiz -->
-          <div class="mb-1 flex justify-between text-xs text-slate-400">
-            <span>Tiến độ câu hỏi</span>
-          </div>
-          <div class="rounded-full h-2 overflow-hidden mb-2 bg-slate-200 dark:bg-slate-700">
-            <div id="quiz-progress-bar" class="prog-fill h-full rounded-full" style="width:0%;"></div>
-          </div>
-          <!-- Timer bar -->
-          <div class="rounded-full h-1.5 overflow-hidden mb-5 bg-slate-200 dark:bg-slate-700">
-            <div id="quiz-timer-bar" class="quiz-timer-bar bg-teal-600" style="width:100%;"></div>
-          </div>
-
-          <!-- Question card -->
-          <div
-            class="rounded-2xl p-6 mb-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <div id="quiz-sentence" class="text-sm italic mb-2 text-slate-400"></div>
-            <div id="quiz-question"
-              class="text-base font-semibold mb-4 leading-relaxed text-slate-800 dark:text-slate-100"></div>
-            <div id="quiz-hint"
-              class="text-xs px-3 py-2 rounded-lg border border-dashed bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400">
-            </div>
-          </div>
-
-          <!-- Options -->
-          <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3"></div>
-
-          <!-- Feedback -->
-          <div id="quiz-feedback" class="quiz-feedback" style="display:none;"></div>
-        </div>
-
-        <!-- Quiz Result Screen -->
-        <div id="quiz-result-screen"
-          class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-md">
-          <div id="quiz-result-grade" class="text-center">
-            <div class="text-5xl mb-2">🏆</div>
-            <div class="text-2xl font-black text-slate-900 dark:text-white">Kết Quả</div>
-          </div>
-          <div id="quiz-result-score" class="text-center"></div>
-          <div id="quiz-result-desc" class="text-sm text-center max-w-md w-full"></div>
-          <button id="btn-quiz-result-restart"
-            class="px-8 py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-md mt-2">
-            Thử lại ngay
-          </button>
-        </div>
-      </div>
+      <!-- Hidden fallbacks for legacy references -->
+      <div id="game-container" style="display:none !important;"></div>
+      <div id="quiz-container" style="display:none !important;"></div>
 
     </main>
   </div>
@@ -1366,14 +1496,14 @@
           <div class="flex items-center gap-4 flex-wrap">
             <div
               class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#F5EBDC] dark:bg-slate-700/70 border border-[#E8DAC6] dark:border-slate-600/70">
-              <span
-                class="w-5 h-5 rounded-full bg-[#E5B55A] text-white flex items-center justify-center text-xs font-black shadow-sm">✓</span>
+              <img src="https://img.icons8.com/color/48/checkmark.png" class="w-5 h-5 object-contain flex-shrink-0"
+                alt="Check" />
               <span class="text-xs font-bold text-[#3B2C24] dark:text-slate-200">100% Tư duy liên kết logic</span>
             </div>
             <div
               class="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#F5EBDC] dark:bg-slate-700/70 border border-[#E8DAC6] dark:border-slate-600/70">
-              <span
-                class="w-5 h-5 rounded-full bg-[#E5B55A] text-white flex items-center justify-center text-xs font-black shadow-sm">✓</span>
+              <img src="https://img.icons8.com/color/48/checkmark.png" class="w-5 h-5 object-contain flex-shrink-0"
+                alt="Check" />
               <span class="text-xs font-bold text-[#3B2C24] dark:text-slate-200">Phản xạ câu và cụm từ tức thì</span>
             </div>
           </div>
@@ -1404,9 +1534,13 @@
       <div
         class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-[28px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
         <div>
-          <!-- 5 sao vàng -->
-          <div class="flex items-center gap-1 text-[#F5A623] text-sm mb-4 select-none">
-            ★★★★★
+          <!-- 5 sao vàng Icons8 -->
+          <div class="flex items-center gap-1 mb-4 select-none">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
           </div>
           <!-- Đoạn trích dẫn in nghiêng -->
           <p class="italic text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-8 font-normal">
@@ -1432,9 +1566,13 @@
       <div
         class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-[28px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
         <div>
-          <!-- 5 sao vàng -->
-          <div class="flex items-center gap-1 text-[#F5A623] text-sm mb-4 select-none">
-            ★★★★★
+          <!-- 5 sao vàng Icons8 -->
+          <div class="flex items-center gap-1 mb-4 select-none">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
           </div>
           <!-- Đoạn trích dẫn in nghiêng -->
           <p class="italic text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-8 font-normal">
@@ -1459,9 +1597,13 @@
       <div
         class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 rounded-[28px] p-8 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
         <div>
-          <!-- 5 sao vàng -->
-          <div class="flex items-center gap-1 text-[#F5A623] text-sm mb-4 select-none">
-            ★★★★★
+          <!-- 5 sao vàng Icons8 -->
+          <div class="flex items-center gap-1 mb-4 select-none">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
           </div>
           <!-- Đoạn trích dẫn in nghiêng -->
           <p class="italic text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-8 font-normal">
@@ -1504,7 +1646,9 @@
               <span id="fc-front-pos" class="badge-pos v">v</span>
               <div id="fc-front-word" class="front-word">DECIDE</div>
               <div id="fc-front-phonetic" class="front-phonetic">/dɪˈsaɪd/</div>
-              <button id="fc-btn-speak" class="btn-speak-large" title="Nghe phát âm">🔊</button>
+              <button id="fc-btn-speak" class="btn-speak-large flex items-center justify-center" title="Nghe phát âm">
+                <img src="https://img.icons8.com/color/48/high-volume.png" class="w-6 h-6 object-contain" alt="Audio" />
+              </button>
               <div class="flip-hint"><span>↺</span> Bấm thẻ để lật xem nghĩa</div>
             </div>
             <div class="card-face back">
@@ -1520,8 +1664,14 @@
           </div>
         </div>
         <div class="modal-actions">
-          <button id="fc-btn-master" class="btn-status-action btn-master"><span>✓</span> Đã thuộc</button>
-          <button id="fc-btn-review" class="btn-status-action btn-review"><span>★</span> Cần ôn lại</button>
+          <button id="fc-btn-master" class="btn-status-action btn-master flex items-center justify-center gap-2">
+            <img src="https://img.icons8.com/color/48/checkmark.png" class="w-4 h-4 object-contain" alt="Check" />
+            <span>Đã thuộc</span>
+          </button>
+          <button id="fc-btn-review" class="btn-status-action btn-review flex items-center justify-center gap-2">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-4 h-4 object-contain" alt="Star" />
+            <span>Cần ôn lại</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1558,16 +1708,15 @@
 
           <button type="submit"
             class="w-full py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-colors shadow-sm text-sm">
-            Đăng nhập ngay
+            Đăng nhập
           </button>
         </form>
 
         <!-- Form Đăng ký -->
         <form id="auth-form-register" class="space-y-4" style="display:none;">
           <div>
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Họ và Tên học
-              viên</label>
-            <input type="text" id="reg-name" required placeholder="Nguyễn Văn A"
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Họ và Tên</label>
+            <input type="text" id="reg-name" required placeholder="Đinh Mạnh Tiến"
               class="w-full px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-teal-600" />
           </div>
           <div>
@@ -1657,42 +1806,61 @@
   <div id="admin-modal" class="modal-backdrop">
     <div class="modal-container max-w-4xl max-h-[90vh] flex flex-col p-0 overflow-hidden">
       <!-- Header -->
-      <div class="modal-header bg-slate-900 text-white flex items-center justify-between px-6 py-4 border-b border-slate-800">
+      <div
+        class="modal-header bg-slate-900 text-white flex items-center justify-between px-6 py-4 border-b border-slate-800">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center text-lg">
-            👑
+          <div
+            class="w-10 h-10 rounded-xl bg-purple-600/30 border border-purple-500/50 flex items-center justify-center p-1.5 flex-shrink-0">
+            <img src="https://img.icons8.com/color/48/admin-settings-male.png" class="w-7 h-7 object-contain"
+              alt="Admin" />
           </div>
           <div>
             <h3 class="text-base font-bold text-white flex items-center gap-2">
               Bảng Quản Trị Viên — MT-STUDY
-              <span class="text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-600 text-white">Admin Hub</span>
+              <span class="text-[11px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-purple-600 text-white">Admin
+                Hub</span>
             </h3>
             <p class="text-xs text-slate-400">Tra cứu & cấp lại mật khẩu học viên, quản lý người dùng và góp ý</p>
           </div>
         </div>
-        <button id="btn-close-admin" class="btn-close-modal text-slate-400 hover:text-white hover:bg-slate-800">✕</button>
+        <button id="btn-close-admin"
+          class="btn-close-modal text-slate-400 hover:text-white hover:bg-slate-800">✕</button>
       </div>
 
       <!-- Quick Stats & Tabs Bar -->
-      <div class="px-6 py-3 bg-slate-100 dark:bg-slate-900/70 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-3">
+      <div
+        class="px-6 py-3 bg-slate-100 dark:bg-slate-900/70 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between flex-wrap gap-3">
         <!-- Tabs -->
-        <div class="flex gap-2 p-1 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
-          <button id="admin-tab-users" class="admin-tab-btn active flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all">
-            👥 Danh sách Học viên & Mật khẩu
+        <div
+          class="flex gap-2 p-1 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <button id="admin-tab-users"
+            class="admin-tab-btn active flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all">
+            <img src="https://img.icons8.com/color/48/user-male-circle.png" class="w-4 h-4 object-contain"
+              alt="Users" />
+            <span>Danh sách Học viên & Mật khẩu</span>
           </button>
-          <button id="admin-tab-feedbacks" class="admin-tab-btn flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all">
-            💬 Quản lý Góp ý (0)
+          <button id="admin-tab-feedbacks"
+            class="admin-tab-btn flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-lg transition-all">
+            <img src="https://img.icons8.com/color/48/speech-bubble.png" class="w-4 h-4 object-contain"
+              alt="Feedbacks" />
+            <span>Quản lý Góp ý (0)</span>
           </button>
         </div>
 
         <!-- Quick Stats -->
         <div class="flex items-center gap-3 text-xs">
-          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-medium">
-            <span>👥 Tổng học viên:</span>
+          <div
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800 font-medium">
+            <img src="https://img.icons8.com/color/48/user-male-circle.png" class="w-3.5 h-3.5 object-contain"
+              alt="Users" />
+            <span>Tổng học viên:</span>
             <strong id="admin-stat-users" class="font-bold">1</strong>
           </div>
-          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-medium">
-            <span>💬 Tổng góp ý:</span>
+          <div
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-medium">
+            <img src="https://img.icons8.com/color/48/speech-bubble.png" class="w-3.5 h-3.5 object-contain"
+              alt="Feedback" />
+            <span>Tổng góp ý:</span>
             <strong id="admin-stat-feedbacks" class="font-bold">0</strong>
           </div>
         </div>
@@ -1705,31 +1873,39 @@
           <!-- Search & Filter bar -->
           <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
             <div class="relative flex-1 min-w-[240px]">
-              <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">🔍</span>
+              <img src="https://img.icons8.com/color/48/search.png"
+                class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 object-contain" alt="Search" />
               <input type="text" id="admin-search-users" placeholder="Tìm theo tên học viên hoặc email..."
-                class="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-600 dark:text-white" />
+                class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-purple-600 dark:text-white" />
             </div>
             <div class="flex items-center gap-2">
-              <span id="admin-user-count-badge" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              <span id="admin-user-count-badge"
+                class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                 Hiển thị: 1 học viên
               </span>
             </div>
           </div>
 
           <!-- Guide / Note -->
-          <div class="p-3 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/50 mb-4 flex items-start gap-2.5 text-xs text-purple-900 dark:text-purple-200">
-            <span class="text-base mt-0.5">💡</span>
+          <div
+            class="p-3.5 rounded-xl bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800/50 mb-4 flex items-start gap-2.5 text-xs text-purple-900 dark:text-purple-200">
+            <img src="https://img.icons8.com/color/48/idea.png" class="w-5 h-5 object-contain flex-shrink-0 mt-0.5"
+              alt="Tip" />
             <div>
-              <strong>Cách quản lý mật khẩu học viên:</strong> Bấm biểu tượng <strong>👁️</strong> để xem mật khẩu thật của học viên đó, bấm <strong>📋</strong> để copy mật khẩu gửi cho họ, hoặc bấm <strong>✏️ Đổi MK</strong> để trực tiếp gán một mật khẩu mới nếu họ quên.
+              <strong>Cách quản lý mật khẩu học viên:</strong> Bấm biểu tượng con mắt để xem mật khẩu thật của học viên
+              đó, bấm copy để gửi cho họ, hoặc bấm <strong>Đổi MK</strong> để trực tiếp gán một mật khẩu mới nếu họ
+              quên.
             </div>
           </div>
 
           <!-- Users Table -->
-          <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm bg-white dark:bg-slate-900">
+          <div
+            class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden shadow-sm bg-white dark:bg-slate-900">
             <div class="overflow-x-auto">
               <table class="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold border-b border-slate-200 dark:border-slate-700 text-[11px]">
+                  <tr
+                    class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 uppercase tracking-wider font-bold border-b border-slate-200 dark:border-slate-700 text-[11px]">
                     <th class="p-3 w-10">#</th>
                     <th class="p-3">Học viên</th>
                     <th class="p-3">Email</th>
@@ -1738,7 +1914,8 @@
                     <th class="p-3 text-center">Thao tác</th>
                   </tr>
                 </thead>
-                <tbody id="admin-users-table-body" class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                <tbody id="admin-users-table-body"
+                  class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                   <!-- Rendered dynamically by Auth.renderAdminUsers() -->
                 </tbody>
               </table>
@@ -1749,7 +1926,8 @@
         <!-- ── TAB 2: FEEDBACKS LIST ── -->
         <div id="admin-feedbacks-view" style="display: none;">
           <div class="mb-4 flex items-center justify-between">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Danh sách ý kiến đóng góp từ học viên</h4>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500">Danh sách ý kiến đóng góp từ học viên
+            </h4>
           </div>
           <div id="admin-feedbacks-list" class="space-y-3">
             <!-- Rendered dynamically by Auth.renderAdminFeedbacks() -->
@@ -1766,7 +1944,7 @@
     <div class="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-4 relative">
 
       <!-- Trái: Copyright -->
-      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">© 2025 MT-STUDY</p>
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">© 2026 MT-STUDY</p>
 
       <!-- Giữa: Credit -->
       <p class="text-sm font-medium text-slate-500 dark:text-slate-400">
@@ -1774,45 +1952,30 @@
       </p>
 
       <!-- Phải: Social icons + Zalo badge nổi -->
-      <div class="flex items-center gap-5 relative">
+      <div class="flex items-center gap-4 relative">
         <!-- Zalo Badge nổi -->
         <a href="#" title="Zalo"
-          class="absolute flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg transition-colors bg-blue-600 hover:bg-blue-700"
+          class="absolute flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg transition-transform hover:scale-105 bg-blue-600 hover:bg-blue-700"
           style="bottom:calc(100% + 6px);right:0;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M12 0C5.373 0 0 5.373 0 12c0 2.062.522 4.003 1.438 5.7L0 24l6.432-1.41A11.936 11.936 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
-          </svg>
+          <img src="https://img.icons8.com/color/48/zalo.png" class="w-4 h-4 object-contain" alt="Zalo" />
           Zalo
         </a>
 
         <!-- Facebook -->
-        <a href="#" title="Facebook" class="text-slate-400 hover:text-blue-600 transition-colors">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-          </svg>
+        <a href="#" title="Facebook" class="hover:scale-110 transition-transform">
+          <img src="https://img.icons8.com/color/48/facebook-new.png" class="w-6 h-6 object-contain" alt="Facebook" />
         </a>
         <!-- Instagram -->
-        <a href="#" title="Instagram" class="text-slate-400 hover:text-pink-500 transition-colors">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
-          </svg>
+        <a href="#" title="Instagram" class="hover:scale-110 transition-transform">
+          <img src="https://img.icons8.com/color/48/instagram-new.png" class="w-6 h-6 object-contain" alt="Instagram" />
         </a>
         <!-- TikTok -->
-        <a href="#" title="TikTok" class="text-slate-400 hover:text-black dark:hover:text-white transition-colors">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.33-6.34V8.68a8.18 8.18 0 004.78 1.52V6.73a4.84 4.84 0 01-1.01-.04z" />
-          </svg>
+        <a href="#" title="TikTok" class="hover:scale-110 transition-transform">
+          <img src="https://img.icons8.com/color/48/tiktok.png" class="w-6 h-6 object-contain" alt="TikTok" />
         </a>
         <!-- YouTube -->
-        <a href="#" title="YouTube" class="text-slate-400 hover:text-red-600 transition-colors">
-          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
-          </svg>
+        <a href="#" title="YouTube" class="hover:scale-110 transition-transform">
+          <img src="https://img.icons8.com/color/48/youtube-play.png" class="w-6 h-6 object-contain" alt="YouTube" />
         </a>
       </div>
     </div>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📝 Bài Thi Trắc Nghiệm Phản Xạ — MT-STUDY</title>
+  <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/test-passed.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#006D77',
+              light: '#83C5BE',
+              dark: '#004E55',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="quiz.css">
+
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F8FAFC;
+    }
+
+    #quiz-container {
+      display: flex !important;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .quiz-option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 16px 20px;
+      border-radius: 14px;
+      border: 1.5px solid #E2E8F0;
+      background: #FFFFFF;
+      font-weight: 600;
+      font-size: 14.5px;
+      color: #1E293B;
+      transition: all .2s cubic-bezier(.4, 0, .2, 1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .quiz-option-btn:hover:not(:disabled) {
+      border-color: #006D77;
+      background: #F0FDF4;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 109, 119, 0.1);
+    }
+
+    .quiz-option-btn:disabled {
+      cursor: default;
+    }
+
+    .quiz-opt-label {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: #F1F5F9;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 13px;
+      flex-shrink: 0;
+      transition: all .2s;
+    }
+
+    .quiz-option-btn.quiz-opt-correct {
+      border-color: #10B981 !important;
+      background: #ECFDF5 !important;
+      color: #065F46 !important;
+    }
+
+    .quiz-option-btn.quiz-opt-correct .quiz-opt-label {
+      background: #10B981 !important;
+      color: #FFFFFF !important;
+    }
+
+    .quiz-option-btn.quiz-opt-wrong {
+      border-color: #EF4444 !important;
+      background: #FEF2F2 !important;
+      color: #991B1B !important;
+      animation: shake 0.4s ease-in-out;
+    }
+
+    .quiz-option-btn.quiz-opt-wrong .quiz-opt-label {
+      background: #EF4444 !important;
+      color: #FFFFFF !important;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col text-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-slate-100">
+
+  <!-- ═══════════════════════════════════════════
+       HEADER NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2.5 text-decoration-none group">
+        <img src="https://img.icons8.com/color/48/brain.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110" alt="MT-STUDY Logo">
+        <div>
+          <span class="text-lg font-black tracking-tight text-slate-900 dark:text-white">MT-<span class="text-teal-700 dark:text-teal-400">STUDY</span></span>
+          <span class="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 ml-2 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300">Quiz Reflex</span>
+        </div>
+      </a>
+
+      <!-- Quick Page Switcher -->
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+          <img src="https://img.icons8.com/color/48/home.png" class="w-4 h-4 object-contain" alt="Home">
+          <span class="hidden md:inline">Trang Chủ</span>
+        </a>
+        <a href="game.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+          <img src="https://img.icons8.com/color/48/controller.png" class="w-4 h-4 object-contain" alt="Game">
+          <span class="hidden md:inline">Ghép Cặp</span>
+        </a>
+        <span class="w-px h-5 bg-slate-200 dark:bg-slate-700"></span>
+        <!-- Header User Greeting Container (SweetAlert2 Managed) -->
+        <div id="header-user-wrap" class="flex items-center gap-2"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT: QUIZ
+  ═══════════════════════════════════════════ -->
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- Top Banner & Topic Select -->
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-teal-50 dark:bg-teal-950/50 border border-teal-200 dark:border-teal-800 flex items-center justify-center flex-shrink-0 shadow-sm">
+          <img src="https://img.icons8.com/color/48/test-passed.png" class="w-9 h-9 object-contain" alt="Quiz">
+        </div>
+        <div>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+            Bài Thi Trắc Nghiệm Phản Xạ
+          </h1>
+          <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-lg leading-relaxed">
+            Điền từ đúng ngữ cảnh & chọn đúng dạng từ trong 15 giây. Nhận xét kết quả theo các mốc điểm và emotion khích lệ!
+          </p>
+        </div>
+      </div>
+
+      <!-- Topic Dropdown Selector -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+        <label for="page-topic-select" class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+          <img src="https://img.icons8.com/color/48/idea.png" class="w-4 h-4 object-contain" alt="Topic">
+          Chủ đề:
+        </label>
+        <select id="page-topic-select" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-600 shadow-sm">
+          <!-- Populated by JS -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Quiz Container View -->
+    <div id="quiz-container">
+
+      <!-- ── MÀN HÌNH CHUẨN BỊ (INTRO SCREEN): KHÔNG CHẠY THỜI GIAN KHI CHƯA BẤM ── -->
+      <div id="quiz-intro-screen" class="bg-white dark:bg-slate-800 rounded-3xl p-8 md:p-10 border border-slate-200 dark:border-slate-700 shadow-md text-center max-w-xl mx-auto my-4">
+        <div class="w-20 h-20 rounded-3xl bg-teal-50 dark:bg-teal-950/50 border border-teal-200 dark:border-teal-800 flex items-center justify-center mx-auto mb-5 shadow-sm">
+          <img id="quiz-intro-icon" src="https://img.icons8.com/color/48/test-passed.png" class="w-12 h-12 object-contain" alt="Quiz"/>
+        </div>
+        <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">Sẵn Sàng Làm Bài Thi!</h2>
+        <p id="quiz-intro-topic-name" class="text-sm font-bold text-teal-700 dark:text-teal-400 mb-6"></p>
+
+        <!-- Thẻ quy tắc làm bài -->
+        <div class="bg-slate-50 dark:bg-slate-900/60 rounded-2xl p-5 text-left text-xs md:text-sm text-slate-600 dark:text-slate-300 space-y-3 mb-8 border border-slate-200 dark:border-slate-700">
+          <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/color/48/checkmark.png" class="w-4 h-4 object-contain flex-shrink-0" alt="Check"/>
+            <span>Bài thi gồm <strong>10 câu hỏi</strong> trắc nghiệm điền từ & chọn đúng dạng họ từ.</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/color/48/alarm-clock.png" class="w-4 h-4 object-contain flex-shrink-0" alt="Timer"/>
+            <span>Thời gian đếm ngược: <strong>15 giây / mỗi câu</strong>.</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/color/48/idea.png" class="w-4 h-4 object-contain flex-shrink-0" alt="Tip"/>
+            <span>Thời gian <strong>chỉ bắt đầu chạy khi bạn nhấn nút "Bắt đầu làm bài"</strong> dưới đây!</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/color/48/trophy.png" class="w-4 h-4 object-contain flex-shrink-0" alt="Trophy"/>
+            <span>Đạt 10 điểm để nhận danh hiệu vinh danh <strong>Aduuu học bá</strong>!</span>
+          </div>
+        </div>
+
+        <button id="btn-quiz-start" class="w-full sm:w-auto px-10 py-4 rounded-2xl font-black text-base text-white bg-teal-700 hover:bg-teal-800 transition-all shadow-lg hover:shadow-teal-700/25 active:scale-95 flex items-center justify-center gap-2 mx-auto cursor-pointer">
+          <span>🚀</span> Bắt đầu làm bài thi
+        </button>
+      </div>
+
+      <!-- Header thanh điều khiển (Ẩn cho đến khi bắt đầu làm bài) -->
+      <div id="quiz-controls" style="display:none;" class="rounded-2xl px-6 py-4 flex items-center justify-between flex-wrap gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="flex items-center gap-6 md:gap-8">
+          <!-- Question Counter -->
+          <div>
+            <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Tiến độ câu hỏi</div>
+            <div id="quiz-question-num" class="text-xl font-black text-slate-900 dark:text-white">1 / 10</div>
+          </div>
+
+          <!-- Score Counter -->
+          <div class="flex items-center gap-2.5">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-6 h-6 object-contain" alt="Star">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Điểm số</div>
+              <div id="quiz-current-score" class="text-xl font-black text-emerald-600 dark:text-emerald-400">0</div>
+            </div>
+          </div>
+
+          <!-- Countdown Timer -->
+          <div class="flex items-center gap-2.5">
+            <img src="https://img.icons8.com/color/48/alarm-clock.png" class="w-6 h-6 object-contain" alt="Timer">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Thời gian</div>
+              <div class="flex items-baseline gap-1">
+                <span id="quiz-timer-count" class="text-xl font-black text-teal-700 dark:text-teal-400">15</span>
+                <span class="text-xs text-slate-400 font-semibold">giây</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Restart -->
+        <button id="btn-quiz-restart" class="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition-all shadow-sm">
+          <img src="https://img.icons8.com/color/48/refresh.png" class="w-4 h-4 object-contain" alt="Restart">
+          <span>Quay lại chuẩn bị</span>
+        </button>
+      </div>
+
+      <!-- Quiz Play Screen (Ẩn cho đến khi bắt đầu) -->
+      <div id="quiz-play-screen" style="display:none;">
+        <!-- Progress Bar (Overall) -->
+        <div class="mb-1 flex justify-between text-xs text-slate-400">
+          <span>Tiến độ bài thi</span>
+        </div>
+        <div class="rounded-full h-2 overflow-hidden mb-2 bg-slate-200 dark:bg-slate-700">
+          <div id="quiz-progress-bar" class="prog-fill h-full rounded-full bg-teal-600 transition-all duration-300" style="width:0%;"></div>
+        </div>
+
+        <!-- Timer Countdown Bar -->
+        <div class="rounded-full h-1.5 overflow-hidden mb-6 bg-slate-200 dark:bg-slate-700">
+          <div id="quiz-timer-bar" class="quiz-timer-bar bg-teal-600 h-full transition-all duration-1000" style="width:100%;"></div>
+        </div>
+
+        <!-- Question Card -->
+        <div class="rounded-3xl p-6 md:p-8 mb-5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+          <div id="quiz-sentence" class="text-xs md:text-sm italic mb-2 text-slate-400 font-medium"></div>
+          <div id="quiz-question" class="text-lg md:text-xl font-bold mb-4 leading-relaxed text-slate-900 dark:text-slate-100"></div>
+          <div id="quiz-hint" class="text-xs px-4 py-2.5 rounded-xl border border-dashed bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 flex items-center gap-2"></div>
+        </div>
+
+        <!-- Answer Options (A, B, C, D) -->
+        <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-4"></div>
+
+        <!-- Feedback Box -->
+        <div id="quiz-feedback" class="quiz-feedback" style="display:none;"></div>
+      </div>
+
+      <!-- Quiz Result Screen -->
+      <div id="quiz-result-screen" class="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-xl text-center max-w-lg mx-auto" style="display:none;">
+        <div id="quiz-result-grade" class="text-center mb-3">
+          <div class="text-5xl mb-2">🏆</div>
+          <div class="text-2xl font-black text-slate-900 dark:text-white">Kết Quả</div>
+        </div>
+        <div id="quiz-result-score" class="text-center my-4"></div>
+        <div id="quiz-result-desc" class="text-sm text-center max-w-md w-full mx-auto my-4"></div>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-6">
+          <button id="btn-quiz-result-restart" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-all shadow-md">
+            Làm lại bài thi này
+          </button>
+          <a href="game.html" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 border border-teal-200 dark:border-teal-800 transition-all text-center">
+            🎮 Thử sức Ghép Cặp
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="mt-auto bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-4">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between flex-wrap gap-4">
+      <p class="text-xs font-medium text-slate-500">© 2025 MT-STUDY · Make With Love by <strong class="text-teal-700">MT</strong></p>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-xs font-bold text-teal-700 hover:underline">🏠 Về Trang Chủ</a>
+        <span class="text-slate-300">·</span>
+        <a href="game.html" class="text-xs font-bold text-teal-700 hover:underline">🎮 Trò Chơi Ghép Cặp</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="storage.js"></script>
+  <script src="celebration.js"></script>
+  <script src="speech.js"></script>
+  <script src="data.js"></script>
+  <script src="quiz.js"></script>
+  <script src="auth.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Khởi tạo Auth & Header
+      Auth.init();
+
+      // 2. Lấy tham số topic từ URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const topicIdParam = urlParams.get("topic") || "topic_work";
+
+      // 3. Khởi tạo Topic Selector
+      const selectEl = document.getElementById("page-topic-select");
+      if (selectEl && VOCAB_DATA) {
+        selectEl.innerHTML = "";
+        VOCAB_DATA.forEach((topic) => {
+          const opt = document.createElement("option");
+          opt.value = topic.id;
+          opt.textContent = `${topic.name}`;
+          selectEl.appendChild(opt);
+        });
+
+        // Set value
+        selectEl.value = topicIdParam;
+
+        selectEl.addEventListener("change", (e) => {
+          const target = VOCAB_DATA.find((t) => t.id === e.target.value);
+          if (target) {
+            Quiz.showIntro(target);
+            // Cập nhật URL mà không reload
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("topic", target.id);
+            window.history.replaceState({}, "", newUrl);
+          }
+        });
+      }
+
+      // 4. Khởi động màn hình chuẩn bị Quiz với chủ đề đã chọn (thời gian chưa chạy)
+      const selectedTopic = VOCAB_DATA.find((t) => t.id === topicIdParam) || VOCAB_DATA[0];
+      Quiz.init();
+      Quiz.showIntro(selectedTopic);
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 Trò Chơi Ghép Cặp Collocation — MT-STUDY</title>
+  <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/controller.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#006D77',
+              light: '#83C5BE',
+              dark: '#004E55',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- SweetAlert2 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="game.css">
+
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F8FAFC;
+    }
+
+    #game-container {
+      display: flex !important;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .game-card {
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14.5px;
+      color: #1E293B;
+      transition: all .2s cubic-bezier(.4, 0, .2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .game-card:hover {
+      border-color: #006D77;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 109, 119, 0.12);
+    }
+
+    .game-card.selected {
+      border-color: #006D77;
+      background: #E6F4F5;
+      color: #004E55;
+      box-shadow: 0 0 0 3px rgba(0, 109, 119, 0.25);
+      transform: scale(1.02);
+    }
+
+    .game-card.matched {
+      border-color: #10B981;
+      background: #ECFDF5;
+      color: #047857;
+      opacity: 0.65;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .game-card.wrong {
+      border-color: #EF4444;
+      background: #FEF2F2;
+      color: #B91C1C;
+      animation: shake 0.4s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col text-slate-800 bg-slate-50 dark:bg-slate-900 dark:text-slate-100">
+
+  <!-- ═══════════════════════════════════════════
+       HEADER NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-2.5 text-decoration-none group">
+        <img src="https://img.icons8.com/color/48/brain.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110" alt="MT-STUDY Logo">
+        <div>
+          <span class="text-lg font-black tracking-tight text-slate-900 dark:text-white">MT-<span class="text-teal-700 dark:text-teal-400">STUDY</span></span>
+          <span class="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 ml-2 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300">Minigame</span>
+        </div>
+      </a>
+
+      <!-- Quick Page Switcher -->
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+          <img src="https://img.icons8.com/color/48/home.png" class="w-4 h-4 object-contain" alt="Home">
+          <span class="hidden md:inline">Trang Chủ</span>
+        </a>
+        <a href="quiz.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+          <img src="https://img.icons8.com/color/48/test-passed.png" class="w-4 h-4 object-contain" alt="Quiz">
+          <span class="hidden md:inline">Trắc Nghiệm</span>
+        </a>
+        <span class="w-px h-5 bg-slate-200 dark:bg-slate-700"></span>
+        <!-- Header User Greeting Container (SweetAlert2 Managed) -->
+        <div id="header-user-wrap" class="flex items-center gap-2"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN CONTENT: COLLOCATION GAME
+  ═══════════════════════════════════════════ -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- Top Banner & Topic Select -->
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-8 border border-slate-200 dark:border-slate-700 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="flex items-start gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-teal-50 dark:bg-teal-950/50 border border-teal-200 dark:border-teal-800 flex items-center justify-center flex-shrink-0 shadow-sm">
+          <img src="https://img.icons8.com/color/48/controller.png" class="w-9 h-9 object-contain" alt="Controller">
+        </div>
+        <div>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
+            Trò Chơi Ghép Cặp Collocation
+          </h1>
+          <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-xl leading-relaxed">
+            Nối cụm từ tiếng Anh với nghĩa tiếng Việt tương ứng. Mỗi lần ghép sai sẽ bị trừ điểm theo thang điểm 10. Chinh phục điểm 10 để nhận danh hiệu <strong>Aduuu học bá</strong>!
+          </p>
+        </div>
+      </div>
+
+      <!-- Topic Dropdown Selector -->
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+        <label for="page-topic-select" class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+          <img src="https://img.icons8.com/color/48/idea.png" class="w-4 h-4 object-contain" alt="Topic">
+          Chủ đề:
+        </label>
+        <select id="page-topic-select" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-sm font-bold text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-600 shadow-sm">
+          <!-- Populated by JS -->
+        </select>
+      </div>
+    </div>
+
+    <!-- Game Container View -->
+    <div id="game-container">
+
+      <!-- Stats Bar Dashboard -->
+      <div class="rounded-2xl px-6 py-4 flex items-center justify-between flex-wrap gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="flex items-center gap-6 md:gap-8">
+          <!-- Timer -->
+          <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/color/48/alarm-clock.png" class="w-7 h-7 object-contain" alt="Timer">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Thời gian</div>
+              <div id="game-timer" class="text-2xl font-black font-mono text-teal-700 dark:text-teal-400">00:00</div>
+            </div>
+          </div>
+
+          <!-- Score -->
+          <div class="flex items-center gap-3">
+            <img src="https://img.icons8.com/color/48/star.png" class="w-7 h-7 object-contain" alt="Score">
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-widest text-slate-400">Điểm số</div>
+              <div id="game-score" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">0</div>
+            </div>
+          </div>
+
+          <!-- High Score Record -->
+          <div class="hidden sm:flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-700">
+            <img src="https://img.icons8.com/color/48/trophy.png" class="w-6 h-6 object-contain" alt="Trophy">
+            <span id="game-record-info" class="text-xs font-bold text-slate-500 dark:text-slate-400">Kỷ lục: Chưa có</span>
+          </div>
+        </div>
+
+        <!-- Action Restart -->
+        <button id="btn-game-restart" class="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-teal-700 hover:bg-teal-800 transition-all shadow-sm active:scale-95">
+          <img src="https://img.icons8.com/color/48/refresh.png" class="w-4 h-4 object-contain brightness-200" alt="Restart">
+          <span>Chơi lại màn này</span>
+        </button>
+      </div>
+
+      <!-- Game Board: 2 Columns -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Cột Trái -->
+        <div class="bg-white/60 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
+          <div class="flex items-center justify-between mb-3 px-3 py-2 rounded-xl bg-teal-50 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 border border-teal-200 dark:border-teal-800/40">
+            <span class="text-xs font-bold uppercase tracking-wider">🇬🇧 Cụm từ tiếng Anh</span>
+            <span class="text-[11px] font-medium opacity-75">Click để chọn</span>
+          </div>
+          <div id="game-col-left" class="flex flex-col gap-3 min-h-[300px]"></div>
+        </div>
+
+        <!-- Cột Phải -->
+        <div class="bg-white/60 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
+          <div class="flex items-center justify-between mb-3 px-3 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/40">
+            <span class="text-xs font-bold uppercase tracking-wider">🇻🇳 Nghĩa tiếng Việt</span>
+            <span class="text-[11px] font-medium opacity-75">Click để ghép</span>
+          </div>
+          <div id="game-col-right" class="flex flex-col gap-3 min-h-[300px]"></div>
+        </div>
+      </div>
+
+      <!-- Victory Box Modal -->
+      <div id="game-victory-box" class="victory-box rounded-3xl p-8 bg-white dark:bg-slate-800 border-2 border-emerald-500 shadow-2xl text-center max-w-lg mx-auto" style="display:none;">
+        <div class="victory-icon text-5xl mb-2">🎉</div>
+        <div class="victory-title text-2xl font-black text-slate-900 dark:text-white">Xuất sắc!</div>
+        <div id="game-victory-desc" class="text-sm text-slate-600 dark:text-slate-300 my-4"></div>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-4">
+          <button id="btn-victory-play-again" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 transition-all shadow-md">
+            Chơi lại màn này
+          </button>
+          <a href="quiz.html" class="w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-teal-700 dark:text-teal-300 bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 border border-teal-200 dark:border-teal-800 transition-all text-center">
+            📝 Thử sức Trắc nghiệm
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="mt-auto bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-4">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between flex-wrap gap-4">
+      <p class="text-xs font-medium text-slate-500">© 2025 MT-STUDY · Make With Love by <strong class="text-teal-700">MT</strong></p>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="text-xs font-bold text-teal-700 hover:underline">🏠 Về Trang Chủ</a>
+        <span class="text-slate-300">·</span>
+        <a href="quiz.html" class="text-xs font-bold text-teal-700 hover:underline">📝 Bài Thi Trắc Nghiệm</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="storage.js"></script>
+  <script src="celebration.js"></script>
+  <script src="speech.js"></script>
+  <script src="data.js"></script>
+  <script src="game.js"></script>
+  <script src="auth.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Khởi tạo Auth & Header
+      Auth.init();
+
+      // 2. Lấy tham số topic từ URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const topicIdParam = urlParams.get("topic") || "topic_work";
+
+      // 3. Khởi tạo Topic Selector
+      const selectEl = document.getElementById("page-topic-select");
+      if (selectEl && VOCAB_DATA) {
+        selectEl.innerHTML = "";
+        VOCAB_DATA.forEach((topic) => {
+          const opt = document.createElement("option");
+          opt.value = topic.id;
+          opt.textContent = `${topic.name}`;
+          selectEl.appendChild(opt);
+        });
+
+        // Set value
+        selectEl.value = topicIdParam;
+
+        selectEl.addEventListener("change", (e) => {
+          const target = VOCAB_DATA.find((t) => t.id === e.target.value);
+          if (target) {
+            Game.start(target);
+            // Cập nhật URL mà không reload
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("topic", target.id);
+            window.history.replaceState({}, "", newUrl);
+          }
+        });
+      }
+
+      // 4. Khởi động Game với chủ đề đã chọn
+      const selectedTopic = VOCAB_DATA.find((t) => t.id === topicIdParam) || VOCAB_DATA[0];
+      Game.init();
+      Game.start(selectedTopic);
+    });
+  </script>
+</body>
+</html>
+

@@ -7,6 +7,7 @@ const VOCAB_DATA = [
     id: "topic_work",
     name: "Công việc & Sự nghiệp",
     icon: "💼",
+    iconUrl: "https://img.icons8.com/color/48/briefcase.png",
     description: "Các từ vựng cốt lõi về kỹ năng làm việc, ra quyết định và mục tiêu nghề nghiệp.",
     roots: [
       {
@@ -92,6 +93,7 @@ const VOCAB_DATA = [
     id: "topic_daily",
     name: "Thói quen & Đời sống",
     icon: "🌱",
+    iconUrl: "https://img.icons8.com/color/48/sun.png",
     description: "Từ vựng về sức khỏe, quản lý thời gian và các thói quen hàng ngày.",
     roots: [
       {
@@ -157,6 +159,7 @@ const VOCAB_DATA = [
     id: "topic_learning",
     name: "Học tập & Giao tiếp",
     icon: "🎯",
+    iconUrl: "https://img.icons8.com/color/48/graduation-cap.png",
     description: "Bộ từ vựng rèn luyện kỹ năng kết nối, chia sẻ ý tưởng và tiếp thu kiến thức.",
     roots: [
       {
@@ -203,6 +206,7 @@ const VOCAB_DATA = [
     id: "topic_environment",
     name: "Môi trường & Thiên nhiên",
     icon: "🌍",
+    iconUrl: "https://img.icons8.com/color/48/leaf.png",
     description: "Từ vựng IELTS về ô nhiễm, biến đổi khí hậu và bảo vệ môi trường.",
     roots: [
       {
@@ -270,6 +274,7 @@ const VOCAB_DATA = [
     id: "topic_technology",
     name: "Công nghệ & Xã hội",
     icon: "💻",
+    iconUrl: "https://img.icons8.com/color/48/laptop.png",
     description: "Từ vựng IELTS về tác động của công nghệ, truyền thông và tự động hóa.",
     roots: [
       {
@@ -308,6 +313,278 @@ const VOCAB_DATA = [
           { id: "col_rise_of_automation", phrase: "the rise of automation", meaning: "sự trỗi dậy của tự động hóa", example: "The rise of automation concerns many workers.", matchWord: "rise" },
           { id: "col_replace_jobs", phrase: "replace human jobs", meaning: "thay thế công việc của con người", example: "AI could replace many human jobs in the near future.", matchWord: "replace" },
           { id: "col_artificial_intelligence", phrase: "artificial intelligence", meaning: "trí tuệ nhân tạo (AI)", example: "Artificial intelligence is reshaping the global economy.", matchWord: "artificial" }
+        ]
+      }
+    ]
+  },
+
+  // ========== CHỦ ĐỀ 6 (NGỮ PHÁP & TỪ VỰNG: THÌ HIỆN TẠI ĐƠN) ==========
+  {
+    id: "topic_grammar_present",
+    name: "Thì Hiện Tại Đơn & Thói Quen",
+    icon: "⏰",
+    iconUrl: "https://img.icons8.com/color/48/alarm-clock.png",
+    description: "Bộ từ vựng & trạng từ cốt lõi diễn tả thói quen sinh hoạt, chân lý tự nhiên và lịch trình cố định theo thì Hiện tại đơn.",
+    roots: [
+      {
+        id: "root_occur",
+        word: "OCCUR",
+        phonetic: "/əˈkɜːr/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Xảy ra, diễn ra theo chu kỳ hoặc tự nhiên",
+        example: "Earthquakes occur frequently along fault lines.",
+        exampleVi: "Các trận động đất xảy ra thường xuyên dọc theo các đường đứt gãy.",
+        family: [
+          { id: "wf_occurrence", word: "occurrence", phonetic: "/əˈkʌr.əns/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Sự việc xảy ra, hiện tượng thường nhật", example: "Traffic jams are an everyday occurrence in Hanoi.", exampleVi: "Kẹt xe là chuyện diễn ra hàng ngày ở Hà Nội." },
+          { id: "wf_reoccur", word: "reoccur", phonetic: "/ˌriː.əˈkɜːr/", pos: "v", posLabel: "Verb (Động từ)", meaning: "Tái diễn, lặp lại định kỳ", example: "Without proper treatment, the symptom may reoccur.", exampleVi: "Nếu không điều trị đúng cách, triệu chứng có thể tái diễn." },
+          { id: "wf_recurrent", word: "recurrent", phonetic: "/rɪˈkʌr.ənt/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Có tính chu kỳ, lặp đi lặp lại", example: "He suffers from recurrent headaches.", exampleVi: "Anh ấy bị chứng đau đầu tái đi tái lại." }
+        ],
+        collocations: [
+          { id: "col_daily_basis", phrase: "occur on a daily basis", meaning: "diễn ra đều đặn mỗi ngày", example: "Meetings occur on a daily basis in this office.", matchWord: "basis" },
+          { id: "col_common_occurrence", phrase: "common occurrence", meaning: "hiện tượng phổ biến, chuyện thường gặp", example: "Power outages used to be a common occurrence.", matchWord: "common" },
+          { id: "col_as_general_rule", phrase: "as a general rule", meaning: "như một quy luật chung", example: "As a general rule, shops close at 9 PM.", matchWord: "rule" }
+        ]
+      },
+      {
+        id: "root_repeat",
+        word: "REPEAT",
+        phonetic: "/rɪˈpiːt/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Lặp lại, làm lại nhiều lần",
+        example: "History tends to repeat itself.",
+        exampleVi: "Lịch sử thường có xu hướng lặp lại chính nó.",
+        family: [
+          { id: "wf_repetition", word: "repetition", phonetic: "/ˌrep.əˈtɪʃ.ən/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Sự lặp lại, sự nhắc lại", example: "Language learning requires frequent repetition.", exampleVi: "Học ngôn ngữ đòi hỏi sự lặp lại thường xuyên." },
+          { id: "wf_repetitive", word: "repetitive", phonetic: "/rɪˈpet.ə.tɪv/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Có tính lặp đi lặp lại, đơn điệu", example: "Factory workers often perform repetitive tasks.", exampleVi: "Công nhân nhà máy thường làm những công việc lặp đi lặp lại." },
+          { id: "wf_repeatedly", word: "repeatedly", phonetic: "/rɪˈpiː.tɪd.li/", pos: "adv", posLabel: "Adverb (Trạng từ)", meaning: "Nhiều lần, liên tục lặp lại", example: "She warned him repeatedly about the risks.", exampleVi: "Cô ấy đã cảnh báo anh ta nhiều lần về các rủi ro." }
+        ],
+        collocations: [
+          { id: "col_repetitive_task", phrase: "repetitive task", meaning: "công việc mang tính lặp lại", example: "Automation eliminates repetitive tasks for employees.", matchWord: "task" },
+          { id: "col_from_time_to_time", phrase: "from time to time", meaning: "thỉnh thoảng, đôi khi (tần suất)", example: "I like to visit my grandparents from time to time.", matchWord: "time" },
+          { id: "col_regular_intervals", phrase: "at regular intervals", meaning: "đều đặn theo từng khoảng thời gian", example: "Trains leave at regular intervals throughout the day.", matchWord: "regular" }
+        ]
+      },
+      {
+        id: "root_exist",
+        word: "EXIST",
+        phonetic: "/ɪɡˈzɪst/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Tồn tại, hiện hữu trong thế giới tự nhiên",
+        example: "Water exists in three states: liquid, solid, and gas.",
+        exampleVi: "Nước tồn tại ở ba thể: lỏng, rắn và khí.",
+        family: [
+          { id: "wf_existence", word: "existence", phonetic: "/ɪɡˈzɪs.təns/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Sự tồn tại, sự hiện diện", example: "Scientists search for the existence of life on Mars.", exampleVi: "Các nhà khoa học tìm kiếm sự tồn tại của sự sống trên sao Hỏa." },
+          { id: "wf_existent", word: "existent", phonetic: "/ɪɡˈzɪs.tənt/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Đang tồn tại, hiện có", example: "We must adapt to existent market conditions.", exampleVi: "Chúng ta phải thích nghi với điều kiện thị trường hiện có." },
+          { id: "wf_coexist", word: "coexist", phonetic: "/ˌkoʊ.ɪɡˈzɪst/", pos: "v", posLabel: "Verb (Động từ)", meaning: "Cùng chung sống, cùng tồn tại hòa bình", example: "Different cultures can coexist peacefully.", exampleVi: "Các nền văn hóa khác nhau có thể cùng chung sống hòa bình." }
+        ],
+        collocations: [
+          { id: "col_come_into_existence", phrase: "come into existence", meaning: "bắt đầu hình thành và tồn tại", example: "The company came into existence ten years ago.", matchWord: "existence" },
+          { id: "col_by_nature", phrase: "by nature", meaning: "vốn dĩ tự nhiên, bản chất là", example: "Humans are social creatures by nature.", matchWord: "nature" },
+          { id: "col_peaceful_coexistence", phrase: "peaceful coexistence", meaning: "sự cùng tồn tại hòa bình", example: "They strive for peaceful coexistence between nations.", matchWord: "peaceful" }
+        ]
+      }
+    ]
+  },
+
+  // ========== CHỦ ĐỀ 7 (NGỮ PHÁP & TỪ VỰNG: ĐỘNG TỪ KHIẾM KHUYẾT) ==========
+  {
+    id: "topic_grammar_modal",
+    name: "Động Từ Khiếm Khuyết & Mức Độ",
+    icon: "⚡",
+    iconUrl: "https://img.icons8.com/color/48/flash-on.png",
+    description: "Bộ từ vựng nền tảng diễn tả năng lực (Can/Could), nghĩa vụ bắt buộc (Must/Have to) và lời khuyên nhủ (Should).",
+    roots: [
+      {
+        id: "root_able",
+        word: "ABLE",
+        phonetic: "/ˈeɪ.bəl/",
+        pos: "adj", posLabel: "Adjective (Tính từ)",
+        meaning: "Có năng lực, có thể làm được điều gì",
+        example: "She is able to speak three languages fluently.",
+        exampleVi: "Cô ấy có thể nói thành thạo ba thứ tiếng.",
+        family: [
+          { id: "wf_ability", word: "ability", phonetic: "/əˈbɪl.ə.ti/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Khả năng, năng lực", example: "He has the ability to solve complex problems.", exampleVi: "Anh ấy có khả năng giải quyết các vấn đề phức tạp." },
+          { id: "wf_enable", word: "enable", phonetic: "/ɪˈneɪ.bəl/", pos: "v", posLabel: "Verb (Động từ)", meaning: "Tạo điều kiện, cho phép ai làm gì", example: "This software enables users to work remotely.", exampleVi: "Phần mềm này cho phép người dùng làm việc từ xa." },
+          { id: "wf_capable", word: "capable", phonetic: "/ˈkeɪ.pə.bəl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Có đủ thực lực, giỏi giang", example: "She is fully capable of leading the project.", exampleVi: "Cô ấy hoàn toàn có đủ thực lực để dẫn dắt dự án." }
+        ],
+        collocations: [
+          { id: "col_have_ability", phrase: "have the ability to", meaning: "có năng lực làm điều gì", example: "Everyone has the ability to learn new skills.", matchWord: "ability" },
+          { id: "col_be_able_afford", phrase: "be able to afford", meaning: "đủ khả năng chi trả tài chính", example: "We won't be able to afford a new car this year.", matchWord: "afford" },
+          { id: "col_enable_someone", phrase: "enable someone to do", meaning: "tạo điều kiện cho ai đó làm gì", example: "Scholarships enable students to study abroad.", matchWord: "enable" }
+        ]
+      },
+      {
+        id: "root_oblige",
+        word: "OBLIGE",
+        phonetic: "/əˈblaɪdʒ/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Bắt buộc, đặt nghĩa vụ ràng buộc (Must / Have to)",
+        example: "The law obliges drivers to wear seatbelts.",
+        exampleVi: "Luật pháp bắt buộc người lái xe phải thắt dây an toàn.",
+        family: [
+          { id: "wf_obligation", word: "obligation", phonetic: "/ˌɒb.lɪˈɡeɪ.ʃən/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Nghĩa vụ, bổn phận bắt buộc", example: "Employers have a legal obligation to ensure safety.", exampleVi: "Người sử dụng lao động có nghĩa vụ pháp lý phải đảm bảo an toàn." },
+          { id: "wf_obligatory", word: "obligatory", phonetic: "/əˈblɪɡ.ə.tər.i/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Bắt buộc, cưỡng chế theo luật", example: "Military service is obligatory in some countries.", exampleVi: "Nghĩa vụ quân sự là bắt buộc ở một số quốc gia." },
+          { id: "wf_mandatory", word: "mandatory", phonetic: "/ˈmæn.də.tər.i/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Bắt buộc chấp hành", example: "Wearing a helmet is mandatory for motorcyclists.", exampleVi: "Đội mũ bảo hiểm là bắt buộc đối với người đi xe máy." }
+        ],
+        collocations: [
+          { id: "col_under_obligation", phrase: "under an obligation to", meaning: "chịu bổn phận, nghĩa vụ phải làm", example: "You are under an obligation to tell the truth.", matchWord: "obligation" },
+          { id: "col_meet_obligations", phrase: "meet one's obligations", meaning: "hoàn thành đầy đủ các nghĩa vụ", example: "Both parties agreed to meet their contractual obligations.", matchWord: "meet" },
+          { id: "col_strictly_mandatory", phrase: "strictly mandatory", meaning: "hoàn toàn bắt buộc, không ngoại lệ", example: "Attendance at the orientation is strictly mandatory.", matchWord: "mandatory" }
+        ]
+      },
+      {
+        id: "root_permit",
+        word: "PERMIT",
+        phonetic: "/pərˈmɪt/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Cho phép, thừa nhận (May / Can)",
+        example: "Smoking is not permitted in the building.",
+        exampleVi: "Hút thuốc không được cho phép trong tòa nhà.",
+        family: [
+          { id: "wf_permission", word: "permission", phonetic: "/pərˈmɪʃ.ən/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Sự cho phép, giấy phép", example: "You must ask for permission before leaving.", exampleVi: "Bạn phải xin phép trước khi rời đi." },
+          { id: "wf_permissible", word: "permissible", phonetic: "/pərˈmɪs.ə.bəl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Được chấp thuận, hợp lệ", example: "Is it permissible to use dictionaries during the exam?", exampleVi: "Có được phép sử dụng từ điển trong giờ thi không?" },
+          { id: "wf_impermissible", word: "impermissible", phonetic: "/ˌɪm.pərˈmɪs.ə.bəl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Không được phép, bị cấm đoán", example: "Such behavior is completely impermissible.", exampleVi: "Hành vi như vậy là hoàn toàn không được phép." }
+        ],
+        collocations: [
+          { id: "col_grant_permission", phrase: "grant permission to", meaning: "cấp giấy phép, phê duyệt cho ai", example: "The council granted permission to build the park.", matchWord: "grant" },
+          { id: "col_without_permission", phrase: "without prior permission", meaning: "khi chưa được xin phép trước", example: "Do not enter the lab without prior permission.", matchWord: "permission" },
+          { id: "col_weather_permitting", phrase: "weather permitting", meaning: "nếu thời tiết thuận lợi cho phép", example: "The match will start at 3 PM, weather permitting.", matchWord: "permitting" }
+        ]
+      }
+    ]
+  },
+
+  // ========== CHỦ ĐỀ 8 (NGỮ PHÁP & TỪ VỰNG: THÌ QUÁ KHỨ ĐƠN) ==========
+  {
+    id: "topic_grammar_past",
+    name: "Thì Quá Khứ Đơn & Trải Nghiệm",
+    icon: "📜",
+    iconUrl: "https://img.icons8.com/color/48/scroll.png",
+    description: "Bộ từ vựng diễn tả các mốc lịch sử, sự kiện đã hoàn tất, kinh nghiệm tích lũy và bài học quá khứ theo thì Quá khứ đơn.",
+    roots: [
+      {
+        id: "root_experience",
+        word: "EXPERIENCE",
+        phonetic: "/ɪkˈspɪə.ri.əns/",
+        pos: "v", posLabel: "Verb / Noun",
+        meaning: "Trải nghiệm, từng trải qua một biến cố trong quá khứ",
+        example: "The country experienced rapid economic growth last decade.",
+        exampleVi: "Đất nước đã trải qua sự tăng trưởng kinh tế nhanh chóng trong thập kỷ trước.",
+        family: [
+          { id: "wf_experienced", word: "experienced", phonetic: "/ɪkˈspɪə.ri.ənst/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Dày dạn kinh nghiệm, từng trải", example: "He is an experienced teacher with 20 years of practice.", exampleVi: "Thầy là một giáo viên dày dạn kinh nghiệm với 20 năm giảng dạy." },
+          { id: "wf_inexperienced", word: "inexperienced", phonetic: "/ˌɪn.ɪkˈspɪə.ri.ənst/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Còn non nớt, chưa có kinh nghiệm", example: "Young drivers are often inexperienced on highways.", exampleVi: "Các tài xế trẻ thường còn non nớt kinh nghiệm trên đường cao tốc." },
+          { id: "wf_experiential", word: "experiential", phonetic: "/ɪkˌspɪə.riˈen.ʃəl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Dựa trên trải nghiệm thực tế", example: "Experiential learning helps students remember longer.", exampleVi: "Phương pháp học từ trải nghiệm thực tế giúp học sinh nhớ lâu hơn." }
+        ],
+        collocations: [
+          { id: "col_gain_experience", phrase: "gain valuable experience", meaning: "tích lũy kinh nghiệm quý báu", example: "Internships help students gain valuable experience.", matchWord: "valuable" },
+          { id: "col_past_experience", phrase: "past experience", meaning: "kinh nghiệm từ quá khứ", example: "Based on past experience, we should prepare early.", matchWord: "past" },
+          { id: "col_learn_experience", phrase: "learn from experience", meaning: "rút ra bài học từ trải nghiệm đã qua", example: "A wise person learns from experience.", matchWord: "learn" }
+        ]
+      },
+      {
+        id: "root_origin",
+        word: "ORIGIN",
+        phonetic: "/ˈɒr.ɪ.dʒɪn/",
+        pos: "n", posLabel: "Noun (Danh từ)",
+        meaning: "Nguồn gốc, gốc tích lịch sử ban đầu",
+        example: "The word has its origin in Latin.",
+        exampleVi: "Từ này có nguồn gốc ban đầu từ tiếng Latinh.",
+        family: [
+          { id: "wf_originate", word: "originate", phonetic: "/əˈrɪdʒ.ən.eɪt/", pos: "v", posLabel: "Verb (Động từ)", meaning: "Bắt nguồn, khởi phát từ quá khứ", example: "The tradition originated in ancient Greece.", exampleVi: "Truyền thống này bắt nguồn từ thời Hy Lạp cổ đại." },
+          { id: "wf_original", word: "original", phonetic: "/əˈrɪdʒ.ən.əl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Nguyên bản, thuở ban đầu", example: "The original manuscript was written in 1850.", exampleVi: "Bản thảo nguyên bản được viết vào năm 1850." },
+          { id: "wf_originally", word: "originally", phonetic: "/əˈrɪdʒ.ən.əl.i/", pos: "adv", posLabel: "Adverb (Trạng từ)", meaning: "Ban đầu, vào thời điểm khởi đầu", example: "The building was originally used as a library.", exampleVi: "Tòa nhà ban đầu được sử dụng như một thư viện." }
+        ],
+        collocations: [
+          { id: "col_take_place_past", phrase: "take place in the past", meaning: "diễn ra trong quá khứ", example: "The historical battle took place in the past century.", matchWord: "place" },
+          { id: "col_date_back", phrase: "date back to", meaning: "có niên đại bắt nguồn từ thời", example: "The ancient temple dates back to the 12th century.", matchWord: "date" },
+          { id: "col_in_first_place", phrase: "in the first place", meaning: "ngay từ thuở ban đầu", example: "Why didn't you mention that in the first place?", matchWord: "first" }
+        ]
+      },
+      {
+        id: "root_achieve",
+        word: "ACHIEVE",
+        phonetic: "/əˈtʃiːv/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Đạt được, gặt hái thành quả sau nỗ lực",
+        example: "The team achieved all their quarterly targets.",
+        exampleVi: "Cả nhóm đã hoàn thành toàn bộ mục tiêu của quý vừa qua.",
+        family: [
+          { id: "wf_achievement", word: "achievement", phonetic: "/əˈtʃiːv.mənt/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Thành tựu, chiến tích đạt được", example: "Winning the award was a proud achievement.", exampleVi: "Đoạt giải thưởng là một thành tựu đáng tự hào." },
+          { id: "wf_achievable", word: "achievable", phonetic: "/əˈtʃiː.və.bəl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Có thể chạm tới, khả thi", example: "Set goals that are realistic and achievable.", exampleVi: "Hãy đặt những mục tiêu thực tế và có thể đạt được." },
+          { id: "wf_overachieve", word: "overachieve", phonetic: "/ˌoʊ.vɚ.əˈtʃiːv/", pos: "v", posLabel: "Verb (Động từ)", meaning: "Đạt thành tích vượt bậc hơn kỳ vọng", example: "She always overachieved in school tests.", exampleVi: "Cô ấy luôn đạt thành tích vượt mức trong các bài thi." }
+        ],
+        collocations: [
+          { id: "col_achieve_success", phrase: "achieve great success", meaning: "đạt được thành công vang dội", example: "The author achieved great success with his first novel.", matchWord: "success" },
+          { id: "col_remarkable_achievement", phrase: "remarkable achievement", meaning: "thành tựu xuất sắc đáng ghi nhận", example: "Eradicating the disease was a remarkable achievement.", matchWord: "remarkable" },
+          { id: "col_accomplish_milestone", phrase: "accomplish a milestone", meaning: "chinh phục một cột mốc quan trọng", example: "Graduating was the first milestone she accomplished.", matchWord: "milestone" }
+        ]
+      }
+    ]
+  },
+
+  // ========== CHỦ ĐỀ 9 (NGỮ PHÁP & TỪ VỰNG: THÌ TƯƠNG LAI GẦN & DỰ ĐỊNH) ==========
+  {
+    id: "topic_grammar_future",
+    name: "Thì Tương Lai Gần & Dự Định",
+    icon: "🚀",
+    iconUrl: "https://img.icons8.com/color/48/rocket.png",
+    description: "Bộ từ vựng & cấu trúc diễn đạt dự định, kế hoạch sắp diễn ra (be going to, plan to, about to) và kỳ vọng tương lai gần.",
+    roots: [
+      {
+        id: "root_intend",
+        word: "INTEND",
+        phonetic: "/ɪnˈtend/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Có ý định, dự định làm gì trong thời gian tới",
+        example: "I intend to start my own business next month.",
+        exampleVi: "Tôi dự định sẽ khởi nghiệp kinh doanh vào tháng tới.",
+        family: [
+          { id: "wf_intention", word: "intention", phonetic: "/ɪnˈten.ʃən/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Ý định, chủ ý dự kiến", example: "He announced his intention to run for mayor.", exampleVi: "Ông thông báo ý định ứng cử thị trưởng." },
+          { id: "wf_intentional", word: "intentional", phonetic: "/ɪnˈten.ʃən.əl/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Có chủ đích, có toan tính trước", example: "The foul was clearly intentional.", exampleVi: "Pha phạm lỗi rõ ràng là có chủ ý trước." },
+          { id: "wf_intentionally", word: "intentionally", phonetic: "/ɪnˈten.ʃən.əl.i/", pos: "adv", posLabel: "Adverb (Trạng từ)", meaning: "Một cách có chủ đích, cố ý", example: "I would never intentionally hurt your feelings.", exampleVi: "Tôi sẽ không bao giờ cố ý làm tổn thương cảm xúc của bạn." }
+        ],
+        collocations: [
+          { id: "col_have_intention", phrase: "have every intention of", meaning: "có toàn bộ ý định thực hiện", example: "We have every intention of finishing the project on time.", matchWord: "intention" },
+          { id: "col_with_intention", phrase: "with the intention of", meaning: "với chủ đích nhằm hướng tới", example: "He went to England with the intention of studying art.", matchWord: "with" },
+          { id: "col_intend_pursue", phrase: "intend to pursue", meaning: "dự định theo đuổi (mục tiêu/nghề nghiệp)", example: "She intends to pursue a master degree in data science.", matchWord: "pursue" }
+        ]
+      },
+      {
+        id: "root_plan",
+        word: "PLAN",
+        phonetic: "/plæn/",
+        pos: "v", posLabel: "Verb / Noun",
+        meaning: "Lên kế hoạch, sắp xếp các bước trước cho tương lai",
+        example: "We are planning to launch the new feature tomorrow.",
+        exampleVi: "Chúng tôi đang lên kế hoạch ra mắt tính năng mới vào ngày mai.",
+        family: [
+          { id: "wf_planner", word: "planner", phonetic: "/ˈplæn.ər/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Người lập kế hoạch, cuốn sổ kế hoạch", example: "An urban planner designs efficient cities.", exampleVi: "Một nhà quy hoạch đô thị thiết kế các thành phố hiệu quả." },
+          { id: "wf_planned", word: "planned", phonetic: "/plænd/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Đã được lên lịch trình sẵn", example: "The planned departure time is 8:00 AM.", exampleVi: "Thời gian khởi hành theo kế hoạch là 8 giờ sáng." },
+          { id: "wf_unplanned", word: "unplanned", phonetic: "/ʌnˈplænd/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Ngoài dự tính, bất ngờ phát sinh", example: "An unplanned expense strained our budget.", exampleVi: "Một khoản chi phí ngoài dự tính đã gây áp lực lên ngân sách." }
+        ],
+        collocations: [
+          { id: "col_according_to_plan", phrase: "go according to plan", meaning: "diễn ra suôn sẻ đúng theo dự kiến", example: "Everything is going according to plan.", matchWord: "plan" },
+          { id: "col_be_about_to", phrase: "be about to start", meaning: "sắp sửa bắt đầu ngay tức thì (tương lai rất gần)", example: "Hurry up, the movie is about to start!", matchWord: "about" },
+          { id: "col_careful_preparations", phrase: "make careful preparations", meaning: "chuẩn bị chu đáo cẩn thận", example: "They made careful preparations for the wedding.", matchWord: "preparations" }
+        ]
+      },
+      {
+        id: "root_expect",
+        word: "EXPECT",
+        phonetic: "/ɪkˈspekt/",
+        pos: "v", posLabel: "Verb (Động từ)",
+        meaning: "Kỳ vọng, dự đoán điều gì sắp xảy đến",
+        example: "We expect sales to increase substantially next quarter.",
+        exampleVi: "Chúng tôi kỳ vọng doanh số sẽ tăng mạnh trong quý tới.",
+        family: [
+          { id: "wf_expectation", word: "expectation", phonetic: "/ˌek.spekˈteɪ.ʃən/", pos: "n", posLabel: "Noun (Danh từ)", meaning: "Sự kỳ vọng, mong đợi", example: "The concert exceeded our highest expectations.", exampleVi: "Buổi hòa nhạc đã vượt qua sự kỳ vọng cao nhất của chúng tôi." },
+          { id: "wf_expectant", word: "expectant", phonetic: "/ɪkˈspek.tənt/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Đầy mong chờ, háo hức ngóng đợi", example: "The expectant crowd cheered as the band walked on stage.", exampleVi: "Đám đông đầy mong chờ hò reo khi ban nhạc bước lên sân khấu." },
+          { id: "wf_unexpected", word: "unexpected", phonetic: "/ˌʌn.ɪkˈspek.tɪd/", pos: "adj", posLabel: "Adjective (Tính từ)", meaning: "Bất ngờ, không lường trước được", example: "Her sudden visit was a lovely unexpected surprise.", exampleVi: "Chuyến thăm đột ngột của cô ấy là một bất ngờ thú vị không báo trước." }
+        ],
+        collocations: [
+          { id: "col_in_near_future", phrase: "in the near future", meaning: "trong tương lai gần sắp tới", example: "Prices are expected to stabilize in the near future.", matchWord: "future" },
+          { id: "col_meet_expectations", phrase: "meet all expectations", meaning: "đáp ứng trọn vẹn mọi sự kỳ vọng", example: "The new product met all customer expectations.", matchWord: "expectations" },
+          { id: "col_bound_to_happen", phrase: "be bound to happen", meaning: "chắc chắn không sớm thì muộn sẽ diễn ra", example: "With such reckless driving, an accident was bound to happen.", matchWord: "bound" }
         ]
       }
     ]

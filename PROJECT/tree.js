@@ -38,7 +38,9 @@ const Tree = {
             <div class="node-phonetic">${root.phonetic}</div>
             <div class="node-meaning">${root.meaning}</div>
             <div class="node-actions">
-              <button class="btn-speak-mini" data-speak="${root.word}" title="Nghe phát âm">🔊</button>
+              <button class="btn-speak-mini flex items-center justify-center" data-speak="${root.word}" title="Nghe phát âm">
+                <img src="https://img.icons8.com/color/48/high-volume.png" class="w-3.5 h-3.5 object-contain" alt="Audio"/>
+              </button>
               <button class="btn-toggle-branch" data-toggle="${root.id}">
                 <span class="toggle-icon">▼</span> Nhánh
               </button>
@@ -65,7 +67,9 @@ const Tree = {
                   <div class="node-phonetic">${fWord.phonetic}</div>
                   <div class="node-meaning">${fWord.meaning}</div>
                   <div class="node-actions">
-                    <button class="btn-speak-mini" data-speak="${fWord.word}" title="Nghe phát âm">🔊</button>
+                    <button class="btn-speak-mini flex items-center justify-center" data-speak="${fWord.word}" title="Nghe phát âm">
+                      <img src="https://img.icons8.com/color/48/high-volume.png" class="w-3.5 h-3.5 object-contain" alt="Audio"/>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -84,7 +88,9 @@ const Tree = {
                 <div class="collocation-phrase">${col.phrase}</div>
                 <div class="collocation-meaning">${col.meaning}</div>
               </div>
-              <button class="btn-speak-mini" data-speak="${col.phrase}" title="Nghe cụm từ">🔊</button>
+              <button class="btn-speak-mini flex items-center justify-center" data-speak="${col.phrase}" title="Nghe cụm từ">
+                <img src="https://img.icons8.com/color/48/high-volume.png" class="w-3.5 h-3.5 object-contain" alt="Audio"/>
+              </button>
             </div>
           `;
         });
