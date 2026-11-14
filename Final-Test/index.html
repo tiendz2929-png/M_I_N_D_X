@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Xếp Hình</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+
+        .tile {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: clamp(1rem, 2.2vw, 1.75rem);
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.12s ease, filter 0.12s ease;
+            border-radius: 0.75rem;
+        }
+
+        .tile:not(.tile-empty):hover {
+            filter: brightness(0.95);
+            transform: scale(0.98);
+        }
+
+        .tile-empty {
+            background-color: #000000;
+            cursor: default;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-200 flex flex-col items-center justify-center p-4 md:p-8 font-sans text-gray-800">
+
+    <div class="w-full max-w-4xl bg-white rounded-2xl shadow-lg border border-gray-200 p-6 md:p-8 flex flex-col gap-6">
+
+        <div class="flex justify-center">
+            <button id="startBtn"
+                class="bg-red-500 hover:bg-red-600 active:scale-95 text-white rounded-lg px-8 py-2 font-bold text-base shadow transition-all">
+                Bắt đầu
+            </button>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6 items-start justify-center">
+
+            <div class="flex-1 w-full bg-gray-50/60 rounded-2xl p-3 border border-gray-100">
+                <div id="board" class="w-full"></div>
+                <div id="winMsg"
+                    class="hidden mt-4 text-center text-xl font-black text-green-500 tracking-wide animate-bounce">
+                    🎉 YOU WIN! 🎉
+                </div>
+            </div>
+
+            <div class="w-full md:w-48 flex flex-col gap-4 flex-shrink-0">
+
+                <div class="bg-green-100 rounded-xl p-4 text-center">
+                    <div class="text-xs font-semibold text-gray-600 mb-1">Đồng Hồ</div>
+                    <div id="timer" class="text-3xl font-black text-green-800 tabular-nums">00:00</div>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <div class="text-xs font-bold text-gray-500 text-center mb-3">Hướng Dẫn Di Chuyển</div>
+
+                    <div class="flex flex-col items-center gap-1 mb-2">
+                        <button id="btnUp"
+                            class="w-8 h-8 rounded border border-gray-300 bg-white hover:bg-gray-100 active:scale-90 flex items-center justify-center text-gray-600 text-xs font-bold transition-all shadow-sm">
+                            ↑
+                        </button>
+                        <div class="flex gap-1">
+                            <button id="btnLeft"
+                                class="w-8 h-8 rounded border border-gray-300 bg-white hover:bg-gray-100 active:scale-90 flex items-center justify-center text-gray-600 text-xs font-bold transition-all shadow-sm">
+                                ←
+                            </button>
+                            <button id="btnDown"
+                                class="w-8 h-8 rounded border border-gray-300 bg-white hover:bg-gray-100 active:scale-90 flex items-center justify-center text-gray-600 text-xs font-bold transition-all shadow-sm">
+                                ↓
+                            </button>
+                            <button id="btnRight"
+                                class="w-8 h-8 rounded border border-gray-300 bg-white hover:bg-gray-100 active:scale-90 flex items-center justify-center text-gray-600 text-xs font-bold transition-all shadow-sm">
+                                →
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-1">
+                        <div class="flex gap-1">
+                            <div
+                                class="w-8 h-8 rounded border border-gray-300 bg-white shadow-sm flex items-center justify-center text-xs font-bold text-gray-600">
+                                W</div>
+                        </div>
+                        <div class="flex gap-1">
+                            <div
+                                class="w-8 h-8 rounded border border-gray-300 bg-white shadow-sm flex items-center justify-center text-xs font-bold text-gray-600">
+                                A</div>
+                            <div
+                                class="w-8 h-8 rounded border border-gray-300 bg-white shadow-sm flex items-center justify-center text-xs font-bold text-gray-600">
+                                S</div>
+                            <div
+                                class="w-8 h-8 rounded border border-gray-300 bg-white shadow-sm flex items-center justify-center text-xs font-bold text-gray-600">
+                                D</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-200 divide-x divide-gray-300">
+                <th class="p-2 w-16">#</th>
+                <th class="p-2">Bước đi</th>
+                <th class="p-2">Thời Gian</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
