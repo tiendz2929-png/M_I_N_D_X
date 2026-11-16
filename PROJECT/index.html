@@ -1068,6 +1068,29 @@
     body.dark ::-webkit-scrollbar-thumb {
       background: #3A4F5C;
     }
+
+    /* ── FIXED SIDEBAR ── */
+    #sidebar {
+      scrollbar-width: thin;
+      scrollbar-color: #CBD5E1 transparent;
+    }
+
+    #sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    #sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #sidebar::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 4px;
+    }
+
+    body.dark #sidebar::-webkit-scrollbar-thumb {
+      background: #3A4F5C;
+    }
   </style>
 </head>
 
@@ -1119,8 +1142,12 @@
 ═══════════════════════════════════════════ -->
   <div class="flex flex-1 max-w-screen-xl mx-auto w-full px-4 gap-6 py-5">
 
+    <!-- ─── SIDEBAR SPACER (giữ chỗ cho sidebar fixed) ─── -->
+    <div class="hidden lg:block flex-shrink-0" style="width:260px;"></div>
+
     <!-- ─── SIDEBAR ─── -->
-    <aside id="sidebar" class="hidden lg:flex flex-col gap-4 flex-shrink-0">
+    <aside id="sidebar" class="hidden lg:flex flex-col gap-4 flex-shrink-0"
+      style="position:fixed; top:68px; left:max(16px, calc((100vw - 1280px)/2 + 16px)); width:260px; height:calc(100vh - 68px); overflow-y:auto; overflow-x:hidden; z-index:40; padding-bottom:24px;">
 
       <!-- Chọn chủ đề -->
       <div class="rounded-2xl p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
@@ -1205,19 +1232,13 @@
           <div
             class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-bold tracking-wide mb-3">
             <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
-            DOL ENGLISH SUPER LMS · HỌC THEO LINEARTHINKING
+            HỌC THEO LINEARTHINKING
           </div>
 
           <h1 class="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight mb-3">
             Làm Chủ Từ Vựng Cốt Lõi Cùng MT-STUDY
           </h1>
 
-          <p class="text-sm md:text-base text-teal-100/90 max-w-3xl leading-relaxed mb-6">
-            Tạm biệt cách học vẹt danh sách từ rời rạc. Với phương pháp <strong>Linearthinking (Tư duy tuyến
-              tính)</strong>, bạn sẽ kết nối từ vựng theo bản đồ logic: từ <strong>Gốc từ (Root)</strong> ➔ <strong>Họ
-              từ (Word Family)</strong> ➔ <strong>Cụm từ liên kết (Collocations)</strong> và ứng dụng ngay vào ngữ cảnh
-            thực tế!
-          </p>
 
           <!-- 3 Feature Pills -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 mb-6 border-t border-teal-700/50">
@@ -1412,7 +1433,6 @@
             Trò Chơi Ghép Cặp Collocation
           </h3>
           <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-            Nối cụm từ tiếng Anh với nghĩa tiếng Việt tương ứng. Mỗi lần ghép sai sẽ bị trừ điểm theo thang điểm 10.
             Chinh phục điểm 10 để nhận danh hiệu "Aduuu học bá"!
           </p>
         </a>

@@ -47,9 +47,6 @@ const App = {
 
       const stats = Storage ? Storage.getTopicStats(topic) : { percent: 0, mastered: 0 };
       const isFinished = stats.percent === 100;
-      const subtitle = isGrammar
-        ? `Ngữ Pháp Trọng Tâm · ${topic.roots.length} Nhóm Gốc Từ`
-        : `Reading ${idx + 1} - Reading ${idx + 1}`;
 
       const card = document.createElement("div");
       card.className = "lms-lesson-card group bg-white dark:bg-slate-800/90 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-400 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between";
@@ -76,11 +73,6 @@ const App = {
             ${isGrammar ? "Core Grammar" : "IELTS 5.0"} - ${skillName} - L${idx + 1} - ${topic.name}
           </h3>
 
-          <!-- Phụ đề bài học (↳ Subtitle) -->
-          <p class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mb-3">
-            <span class="text-slate-400">↳</span>
-            <span class="truncate">${subtitle}</span>
-          </p>
         </div>
 
         <!-- Thanh trạng thái tiến độ bài học (Bottom Bar như hình 1) -->

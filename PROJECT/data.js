@@ -8,7 +8,6 @@ const VOCAB_DATA = [
     name: "Công việc & Sự nghiệp",
     icon: "💼",
     iconUrl: "https://img.icons8.com/color/48/briefcase.png",
-    description: "Các từ vựng cốt lõi về kỹ năng làm việc, ra quyết định và mục tiêu nghề nghiệp.",
     roots: [
       {
         id: "root_decide",
@@ -94,7 +93,6 @@ const VOCAB_DATA = [
     name: "Thói quen & Đời sống",
     icon: "🌱",
     iconUrl: "https://img.icons8.com/color/48/sun.png",
-    description: "Từ vựng về sức khỏe, quản lý thời gian và các thói quen hàng ngày.",
     roots: [
       {
         id: "root_habit",
@@ -160,7 +158,6 @@ const VOCAB_DATA = [
     name: "Học tập & Giao tiếp",
     icon: "🎯",
     iconUrl: "https://img.icons8.com/color/48/graduation-cap.png",
-    description: "Bộ từ vựng rèn luyện kỹ năng kết nối, chia sẻ ý tưởng và tiếp thu kiến thức.",
     roots: [
       {
         id: "root_communicate",
@@ -207,7 +204,6 @@ const VOCAB_DATA = [
     name: "Môi trường & Thiên nhiên",
     icon: "🌍",
     iconUrl: "https://img.icons8.com/color/48/leaf.png",
-    description: "Từ vựng IELTS về ô nhiễm, biến đổi khí hậu và bảo vệ môi trường.",
     roots: [
       {
         id: "root_pollute",
@@ -275,7 +271,6 @@ const VOCAB_DATA = [
     name: "Công nghệ & Xã hội",
     icon: "💻",
     iconUrl: "https://img.icons8.com/color/48/laptop.png",
-    description: "Từ vựng IELTS về tác động của công nghệ, truyền thông và tự động hóa.",
     roots: [
       {
         id: "root_innovate",
@@ -324,7 +319,6 @@ const VOCAB_DATA = [
     name: "Thì Hiện Tại Đơn & Thói Quen",
     icon: "⏰",
     iconUrl: "https://img.icons8.com/color/48/alarm-clock.png",
-    description: "Bộ từ vựng & trạng từ cốt lõi diễn tả thói quen sinh hoạt, chân lý tự nhiên và lịch trình cố định theo thì Hiện tại đơn.",
     roots: [
       {
         id: "root_occur",
@@ -392,7 +386,6 @@ const VOCAB_DATA = [
     name: "Động Từ Khiếm Khuyết & Mức Độ",
     icon: "⚡",
     iconUrl: "https://img.icons8.com/color/48/flash-on.png",
-    description: "Bộ từ vựng nền tảng diễn tả năng lực (Can/Could), nghĩa vụ bắt buộc (Must/Have to) và lời khuyên nhủ (Should).",
     roots: [
       {
         id: "root_able",
@@ -460,7 +453,6 @@ const VOCAB_DATA = [
     name: "Thì Quá Khứ Đơn & Trải Nghiệm",
     icon: "📜",
     iconUrl: "https://img.icons8.com/color/48/scroll.png",
-    description: "Bộ từ vựng diễn tả các mốc lịch sử, sự kiện đã hoàn tất, kinh nghiệm tích lũy và bài học quá khứ theo thì Quá khứ đơn.",
     roots: [
       {
         id: "root_experience",
@@ -528,7 +520,6 @@ const VOCAB_DATA = [
     name: "Thì Tương Lai Gần & Dự Định",
     icon: "🚀",
     iconUrl: "https://img.icons8.com/color/48/rocket.png",
-    description: "Bộ từ vựng & cấu trúc diễn đạt dự định, kế hoạch sắp diễn ra (be going to, plan to, about to) và kỳ vọng tương lai gần.",
     roots: [
       {
         id: "root_intend",
